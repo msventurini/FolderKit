@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-public struct BackButton: View {
-    public var body: some View {
+struct BackButton: View {
+    
+    var body: some View {
         Circle()
             .fill(.white)
             .strokeBorder(lineWidth: 2)
