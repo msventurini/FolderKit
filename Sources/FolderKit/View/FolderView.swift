@@ -18,7 +18,7 @@ public struct FolderView<Content>: View{
     let propertiesTextOpacity: CGFloat
     @Binding var isClicked: Bool
     @Binding var animationOnProgress: Bool
-    @State var showItems: Bool
+    @State private var showItems: Bool = false
     
     @ScaledMetric(relativeTo: .body) var topSizeModifier = 50
     @Environment(\.dynamicTypeSize) private var sizeCategory
@@ -26,12 +26,11 @@ public struct FolderView<Content>: View{
     
     let content: Content
 
-    public init(propertiesTextOpacity: CGFloat, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, showItems: Bool?, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
+    public init(propertiesTextOpacity: CGFloat, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
         self.propertiesTextOpacity = propertiesTextOpacity
         //porque justamente o underline?
         self._isClicked = isClicked
         self._animationOnProgress = animationOnProgress
-        self.showItems = showItems ?? false
         self.content = content()
     }
     
