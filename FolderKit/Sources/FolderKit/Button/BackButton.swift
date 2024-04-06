@@ -1,14 +1,14 @@
 //
 //  BackButton.swift
-//  FolderKit
+//  
 //
 //  Created by Matheus Silveira Venturini on 06/04/24.
 //
 
 import SwiftUI
 
-struct BackButton: View {
-    var body: some View {
+public struct BackButton: View {
+    public var body: some View {
         Circle()
             .fill(.white)
             .strokeBorder(lineWidth: 2)
