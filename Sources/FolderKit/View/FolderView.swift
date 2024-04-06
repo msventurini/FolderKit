@@ -240,7 +240,7 @@ struct testeFolder: View {
             
             
             if (buttonIsTapped) {
-                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening, showItems: haveFolderIsClicked) {
+                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                     Text("oi")
 
                 }
@@ -253,7 +253,7 @@ struct testeFolder: View {
                     .offset(y: 200)
 
             } else {
-                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening, showItems: haveFolderIsClicked) {
+                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                     Text("oi")
 
                 }
