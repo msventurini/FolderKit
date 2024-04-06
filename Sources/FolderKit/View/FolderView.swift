@@ -8,35 +8,32 @@
 
 import SwiftUI
 
-//public struct FolderView<Content>: View where Content: View{
-public struct FolderView: View {
+public struct FolderView<Content>: View{
+//public struct FolderView: View {
     
     // Debugando, depois estes voltam
-//    let text: String? = "teste"
-//    let color: Color? = .cyan
-//    let shadow: Color? = .blue
-//    let propertiesTextOpacity: CGFloat
-//    @Binding var isClicked: Bool
-//    @Binding var animationOnProgress: Bool
-//    @State var showItems: Bool = false
-//    
-//    @ScaledMetric(relativeTo: .body) var topSizeModifier = 50
-//    @Environment(\.dynamicTypeSize) private var sizeCategory
-//    
-//    
-//    let content: () -> Content
-
+    let text: String? = "teste"
+    let color: Color? = .cyan
+    let shadow: Color? = .blue
+    let propertiesTextOpacity: CGFloat
+    @Binding var isClicked: Bool
+    @Binding var animationOnProgress: Bool
+    @State var showItems: Bool = false
     
-        let text: String? = "teste"
-        let color: Color? = .cyan
-        let shadow: Color? = .blue
-        @State var isClicked: Bool = false
-        @State var showItems: Bool = false
-        @State var animationOnProgress: Bool = false
-        @Environment(\.dynamicTypeSize) private var sizeCategory
-        let propertiesTextOpacity: CGFloat = 1
+    @ScaledMetric(relativeTo: .body) var topSizeModifier = 50
+    @Environment(\.dynamicTypeSize) private var sizeCategory
+    
+    
+    let content: Content
 
-
+    public init(propertiesTextOpacity: CGFloat, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, showItems: Bool, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
+        self.propertiesTextOpacity = propertiesTextOpacity
+        //porque justamente o underline?
+        self._isClicked = isClicked
+        self._animationOnProgress = animationOnProgress
+        self.showItems = showItems
+        self.content = content()
+    }
     
     public var body: some View {
         
@@ -243,38 +240,37 @@ struct testeFolder: View {
             
             
             
-//            if (buttonIsTapped) {
-//                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening, showItems: haveFolderIsClicked) {
-//                    Text("oi")
-//
-//                }
-//                    .matchedGeometryEffect(id: "have", in: namespace)
-//                    .transition(.scale(1))
-//
-//                    .padding(.top, 240)
-//                    .padding(.horizontal, 16)
-//                    .padding(.bottom, 334)
-//                    .offset(y: 200)
-//
-//            } else {
-//                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening, showItems: haveFolderIsClicked) {
-//                    Text("oi")
-//
-//                }
-//                    .matchedGeometryEffect(id: "have", in: namespace)
-//                    .transition(.scale(1))
-//
-//
-//                    
-//                    
-//                    
-//            }
+            if (buttonIsTapped) {
+                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening, showItems: haveFolderIsClicked) {
+                    Text("oi")
+
+                }
+                    .matchedGeometryEffect(id: "have", in: namespace)
+                    .transition(.scale(1))
+
+                    .padding(.top, 240)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 334)
+                    .offset(y: 200)
+
+            } else {
+                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening, showItems: haveFolderIsClicked) {
+                    Text("oi")
+
+                }
+                    .matchedGeometryEffect(id: "have", in: namespace)
+                    .transition(.scale(1))
+
+
+                    
+                    
+                    
+            }
             
-            FolderView()
             
             
             Button {
-                withAnimation {
+                withAnimation(.easeInOut) {
                     buttonIsTapped.toggle()
                 }
             } label: {
@@ -295,14 +291,3 @@ struct testeFolder: View {
     testeFolder()
 }
 
-
-
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    SwiftUIView()
-}
