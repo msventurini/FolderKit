@@ -9,12 +9,20 @@
 /* Begin PBXBuildFile section */
 		EA2328392BC12C7F0079C61E /* FolderKit.docc in Sources */ = {isa = PBXBuildFile; fileRef = EA2328382BC12C7F0079C61E /* FolderKit.docc */; };
 		EA23283A2BC12C7F0079C61E /* FolderKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EA2328372BC12C7F0079C61E /* FolderKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EA2328452BC12CDD0079C61E /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2328442BC12CDD0079C61E /* FolderView.swift */; };
+		EA2328472BC12CF90079C61E /* CustomRoundedRectangleFolderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2328462BC12CF90079C61E /* CustomRoundedRectangleFolderLabel.swift */; };
+		EA2328492BC12D100079C61E /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2328482BC12D100079C61E /* Folder.swift */; };
+		EA23284B2BC12D1E0079C61E /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA23284A2BC12D1E0079C61E /* BackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EA2328342BC12C7F0079C61E /* FolderKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FolderKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2328372BC12C7F0079C61E /* FolderKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FolderKit.h; sourceTree = "<group>"; };
 		EA2328382BC12C7F0079C61E /* FolderKit.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FolderKit.docc; sourceTree = "<group>"; };
+		EA2328442BC12CDD0079C61E /* FolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
+		EA2328462BC12CF90079C61E /* CustomRoundedRectangleFolderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRoundedRectangleFolderLabel.swift; sourceTree = "<group>"; };
+		EA2328482BC12D100079C61E /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		EA23284A2BC12D1E0079C61E /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,10 +55,46 @@
 		EA2328362BC12C7F0079C61E /* FolderKit */ = {
 			isa = PBXGroup;
 			children = (
+				EA2328432BC12CCA0079C61E /* Button */,
+				EA2328422BC12CC30079C61E /* Shape */,
+				EA2328412BC12CBC0079C61E /* SubView */,
+				EA2328402BC12CB90079C61E /* View */,
 				EA2328372BC12C7F0079C61E /* FolderKit.h */,
 				EA2328382BC12C7F0079C61E /* FolderKit.docc */,
 			);
 			path = FolderKit;
+			sourceTree = "<group>";
+		};
+		EA2328402BC12CB90079C61E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA2328442BC12CDD0079C61E /* FolderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA2328412BC12CBC0079C61E /* SubView */ = {
+			isa = PBXGroup;
+			children = (
+				EA2328462BC12CF90079C61E /* CustomRoundedRectangleFolderLabel.swift */,
+			);
+			path = SubView;
+			sourceTree = "<group>";
+		};
+		EA2328422BC12CC30079C61E /* Shape */ = {
+			isa = PBXGroup;
+			children = (
+				EA2328482BC12D100079C61E /* Folder.swift */,
+			);
+			path = Shape;
+			sourceTree = "<group>";
+		};
+		EA2328432BC12CCA0079C61E /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				EA23284A2BC12D1E0079C61E /* BackButton.swift */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,7 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA2328452BC12CDD0079C61E /* FolderView.swift in Sources */,
 				EA2328392BC12C7F0079C61E /* FolderKit.docc in Sources */,
+				EA2328472BC12CF90079C61E /* CustomRoundedRectangleFolderLabel.swift in Sources */,
+				EA2328492BC12D100079C61E /* Folder.swift in Sources */,
+				EA23284B2BC12D1E0079C61E /* BackButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
