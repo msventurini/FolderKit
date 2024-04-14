@@ -111,6 +111,7 @@ public struct FolderView<Content>: View{
                             
                                 .background {
                                     CustomRoundedRectangleFolderLabel(color: .white)
+                                        .contentTransition(.interpolate)
                                 }
                                 .padding(.horizontal,24)
                                 .padding(.vertical, 16)
