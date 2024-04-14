@@ -12,9 +12,9 @@ public struct FolderView<Content>: View{
 //public struct FolderView: View {
     
     // Debugando, depois estes voltam
-    let text: String? = "teste"
-    let color: Color? = .cyan
-    let shadow: Color? = .blue
+    let text: String
+    let color: Color
+    let shadow: Color
     let propertiesTextOpacity: CGFloat
     @Binding var isClicked: Bool
     @Binding var animationOnProgress: Bool
@@ -26,7 +26,10 @@ public struct FolderView<Content>: View{
     
     let content: Content
 
-    public init(propertiesTextOpacity: CGFloat, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
+    public init(text: String, color: Color, shadow: Color, propertiesTextOpacity: CGFloat, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
+        self.text = text
+        self.color = color
+        self.shadow = shadow
         self.propertiesTextOpacity = propertiesTextOpacity
         //porque justamente o underline?
         self._isClicked = isClicked
@@ -240,7 +243,7 @@ struct testeFolder: View {
             
             
             if (buttonIsTapped) {
-                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
+                FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                     Text("oi")
 
                 }
@@ -253,7 +256,7 @@ struct testeFolder: View {
                     .offset(y: 200)
 
             } else {
-                FolderView(propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
+                FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                     Text("oi")
 
                 }
