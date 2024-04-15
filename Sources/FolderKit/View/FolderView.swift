@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-public struct FolderView<Content>: View{
+public struct FolderView<Content: View>: View{
 //public struct FolderView: View {
     
     // Debugando, depois estes voltam
-    let text: String
+    let text: String?
     let color: Color
     let shadow: Color
-    let propertiesTextOpacity: CGFloat
+    @State var propertiesTextOpacity: CGFloat
     @Binding var isClicked: Bool
     @Binding var animationOnProgress: Bool
     @State private var showItems: Bool = false
@@ -26,7 +26,7 @@ public struct FolderView<Content>: View{
     
     let content: Content
 
-    public init(text: String, color: Color, shadow: Color, propertiesTextOpacity: CGFloat, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
+    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
         self.text = text
         self.color = color
         self.shadow = shadow
@@ -75,14 +75,9 @@ public struct FolderView<Content>: View{
                         .padding(.horizontal, 16)
                         .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
 
-                    }
-                    
-                    
-                    
-                    
+                    }                    
                     if showItems {
-//                        content()
-                        Text("oi")
+                        content
                     }
                 }
             }
@@ -99,28 +94,33 @@ public struct FolderView<Content>: View{
                 .padding([.top, .leading], (isClicked ? 8 : 0))
                 .overlay {
                     
-                    VStack {
-                        HStack {
+                    if let labelText = text {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                
+                                Text(labelText)
+                                    .font(.title3)
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 8)
+                                
+                                
+                                    .background {
+                                        CustomRoundedRectangleFolderLabel(color: .white)
+                                    }
+                                    .padding(.horizontal,24)
+                                    .padding(.vertical, 16)
+                                
+                            }
                             Spacer()
                             
-                            Text(text ?? "teste")
-                                .font(.title3)
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 8)
-                            
-                            
-                                .background {
-                                    CustomRoundedRectangleFolderLabel(color: .white)
-                                        .contentTransition(.interpolate)
-                                }
-                                .padding(.horizontal,24)
-                                .padding(.vertical, 16)
-                            
                         }
-                        Spacer()
-                        
+
+                        .transition(.opacity)
                     }
-                    .opacity(propertiesTextOpacity)
+                    
+                    
+//                    .opacity(propertiesTextOpacity)
                     
                     
                     
@@ -132,7 +132,7 @@ public struct FolderView<Content>: View{
                 
                 
                 .onTapGesture {
-                    withAnimation(.smooth) {
+                    withAnimation(.interpolatingSpring) {
                         isClicked = true
                         animationOnProgress = true
                         
