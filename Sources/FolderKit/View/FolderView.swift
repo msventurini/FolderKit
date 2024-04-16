@@ -241,34 +241,19 @@ struct testeFolder: View {
         
         ZStack {
             
+                
             
-            
-            if (buttonIsTapped) {
                 FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                     Text("oi")
 
                 }
                     .matchedGeometryEffect(id: "have", in: namespace)
                     .transition(.scale(1))
-
-                    .padding(.top, 240)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 334)
-                    .offset(y: 200)
-
-            } else {
-                FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
-                    Text("oi")
-
-                }
-                    .matchedGeometryEffect(id: "have", in: namespace)
-                    .transition(.scale(1))
+                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
+                    .padding(.top, haveFolderIsClicked ? 0 : 500)
 
 
-                    
-                    
-                    
-            }
+            
             
             
             
@@ -292,5 +277,6 @@ struct testeFolder: View {
 
 #Preview {
     testeFolder()
+
 }
 
