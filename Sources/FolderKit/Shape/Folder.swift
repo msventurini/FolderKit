@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct Folder: InsettableShape {
+public struct OldFolder: InsettableShape {
 
     var topSizeModifier: CGFloat
     var insetAmount: CGFloat = 0
@@ -56,7 +56,7 @@ public struct Folder: InsettableShape {
     
 }
 
-public struct NewFolder: InsettableShape {
+public struct Folder: InsettableShape {
 
     var topSizeModifier: CGFloat
     var insetAmount: CGFloat = 0
@@ -72,8 +72,17 @@ public struct NewFolder: InsettableShape {
     
     public func path(in rect: CGRect) -> Path {
         
-        let cornerRadius: CGFloat = 24
+        
+        let referenceSize: CGFloat = (rect.height < rect.width ? 262 : 350)
+        let currentSize: CGFloat = (rect.height < rect.width ? rect.height : rect.width)
+//        let referenceSize: CGFloat = (rect.height)
+        
+//        let cornerRadius: CGFloat = 24
+        let cornerRadius: CGFloat = 24 * (currentSize/referenceSize)
         let tabHeight: CGFloat = 48
+        let tabCornerRadius: CGFloat = 18 * (currentSize/referenceSize)
+        
+        let textWidth: CGFloat = 82
         
         let begin = CGPoint(x: rect.minX, y: rect.minY + 80)
 
@@ -83,13 +92,12 @@ public struct NewFolder: InsettableShape {
         var path = Path()
         path.move(to: begin)
         
+        
         path.addArc(center: CGPoint(x: cornerRadius, y: cornerRadius * 3), radius: cornerRadius, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
         
+        path.addArc(center: CGPoint(x: cornerRadius * 8.3, y: tabCornerRadius + cornerRadius/2), radius: tabCornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 45), clockwise: true)
         
-        
-        path.addArc(center: CGPoint(x: cornerRadius * 8, y: cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 0), clockwise: true)
-        
-        path.addArc(center: CGPoint(x: rect.maxX - (77 + topSizeModifier), y: 6), radius: 6, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
+        path.addArc(center: CGPoint(x: cornerRadius * 10.5, y: tabCornerRadius), radius: tabCornerRadius, startAngle: Angle(degrees: 225), endAngle: Angle(degrees: 270), clockwise: false)
 
         path.addArc(center: CGPoint(x: rect.maxX - cornerRadius, y: cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 0), clockwise: false)
         
@@ -119,22 +127,37 @@ struct FolderShapePreview: View {
     
     let circleSize: CGFloat = 112
     
+    @State var isTapped: Bool = false
+    
     var body: some View {
         
         ZStack {
             
-            NewFolder(topSizeModifier: topSizeModifier)
+            Folder(topSizeModifier: topSizeModifier)
+                .frame(maxWidth: isTapped ? .infinity : 116, maxHeight: isTapped ? .infinity : 87)
+                .onTapGesture {
+                    withAnimation(.bouncy) {
+                        isTapped.toggle()
+                    }
+                }
+//                .ignoresSafeArea()
                 .background {
                     Color.blue
                 }
-                .scaleEffect(0.9)
+                
+                
+//                .scaleEffect(0.9)
             
-            Folder(topSizeModifier: topSizeModifier)
-                .fill(.yellow)
-                .scaleEffect(0.9)
-                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+
+//            
+//            VStack(spacing: 0) {
+//                Spacer()
+//                Rectangle()
+//                    .frame(width: 100,height: 214)
+//            }
+            
         }
-        .frame(width: 350, height: 262)
+//        .frame(width: 350, height: 262)
         
         
     }

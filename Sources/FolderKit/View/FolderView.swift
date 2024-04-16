@@ -47,7 +47,7 @@ public struct FolderView<Content: View>: View{
                 Folder(topSizeModifier: 0)
                     .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             }
-            .padding(.top, isClicked ? 0 : 8)
+            .padding([.top, .leading], isClicked ? 0 : 8)
             .overlay {
                 
                 VStack {
@@ -87,7 +87,9 @@ public struct FolderView<Content: View>: View{
                     Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
                         .fill(color ?? .cyan)
                     Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
+//                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
                         .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+
                 }
                 
                 .padding([.trailing, .bottom], (isClicked ? 0 : 8))
@@ -249,8 +251,10 @@ struct testeFolder: View {
                 }
                     .matchedGeometryEffect(id: "have", in: namespace)
                     .transition(.scale(1))
-                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
-                    .padding(.top, haveFolderIsClicked ? 0 : 500)
+//                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
+//                    .frame(width: 350, height: 262)
+                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 262)
+//                    .padding(.top, haveFolderIsClicked ? 0 : 500)
 
 
             
