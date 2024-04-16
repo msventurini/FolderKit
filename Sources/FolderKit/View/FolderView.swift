@@ -258,7 +258,7 @@ struct testeFolder: View {
             
             
             Button {
-                withAnimation(.easeInOut) {
+                withAnimation(.bouncy) {
                     buttonIsTapped.toggle()
                 }
             } label: {
