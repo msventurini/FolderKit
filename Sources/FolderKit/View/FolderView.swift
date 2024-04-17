@@ -156,8 +156,9 @@ public struct FolderView<Content: View>: View{
             
         }
         
-        .ignoresSafeArea()
         .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
+        .ignoresSafeArea()
+
         .onChange(of: animationOnProgress) { oldValue, newValue in
             withAnimation {
                 
@@ -174,7 +175,7 @@ public struct FolderView<Content: View>: View{
             
         }
         .onChange(of: isClicked) { oldValue, newValue in
-            withAnimation {
+            withAnimation(.linear) {
                 if newValue == true && animationOnProgress == true {
                     showItems = true
                 } else {
