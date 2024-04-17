@@ -129,9 +129,14 @@ struct FolderShapePreview: View {
     
     @State var isTapped: Bool = false
     
+    private struct AnimationValues {
+        var width: CGFloat = 350
+        var heigth: CGFloat = 262
+    }
+    
     var body: some View {
         
-        ZStack {
+        GeometryReader { geometry in
             
             Folder(topSizeModifier: topSizeModifier)
                 .frame(maxWidth: isTapped ? .infinity : 350, maxHeight: isTapped ? .infinity : 262)
@@ -140,24 +145,14 @@ struct FolderShapePreview: View {
                         isTapped.toggle()
                     }
                 }
-//                .ignoresSafeArea()
+                .position(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY)
                 .background {
                     Color.blue
                 }
-                
-                
-//                .scaleEffect(0.9)
-            
-
-//            
-//            VStack(spacing: 0) {
-//                Spacer()
-//                Rectangle()
-//                    .frame(width: 100,height: 214)
-//            }
+                .ignoresSafeArea()
             
         }
-//        .frame(width: 350, height: 262)
+
         
         
     }
@@ -165,4 +160,6 @@ struct FolderShapePreview: View {
 
 #Preview {
     FolderShapePreview()
+        .ignoresSafeArea()
+
 }

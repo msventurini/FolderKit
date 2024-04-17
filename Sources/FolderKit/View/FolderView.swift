@@ -157,6 +157,7 @@ public struct FolderView<Content: View>: View{
         }
         
         .ignoresSafeArea()
+        .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
         .onChange(of: animationOnProgress) { oldValue, newValue in
             withAnimation {
                 
@@ -253,7 +254,7 @@ struct testeFolder: View {
                     .transition(.scale(1))
 //                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
 //                    .frame(width: 350, height: 262)
-                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 262)
+//                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 262)
 //                    .padding(.top, haveFolderIsClicked ? 0 : 500)
 
 
