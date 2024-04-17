@@ -95,9 +95,9 @@ public struct Folder: InsettableShape {
         
         path.addArc(center: CGPoint(x: cornerRadius, y: cornerRadius * 3), radius: cornerRadius, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
         
-        path.addArc(center: CGPoint(x: cornerRadius * 8.3, y: tabCornerRadius + cornerRadius/2), radius: tabCornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 45), clockwise: true)
+        path.addArc(center: CGPoint(x: rect.maxX - cornerRadius*3 - textWidth, y: tabCornerRadius + cornerRadius/2), radius: tabCornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 45), clockwise: true)
         
-        path.addArc(center: CGPoint(x: cornerRadius * 10.5, y: tabCornerRadius), radius: tabCornerRadius, startAngle: Angle(degrees: 225), endAngle: Angle(degrees: 270), clockwise: false)
+        path.addArc(center: CGPoint(x: rect.maxX - cornerRadius - textWidth, y: tabCornerRadius), radius: tabCornerRadius, startAngle: Angle(degrees: 225), endAngle: Angle(degrees: 270), clockwise: false)
 
         path.addArc(center: CGPoint(x: rect.maxX - cornerRadius, y: cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 0), clockwise: false)
         
@@ -134,7 +134,7 @@ struct FolderShapePreview: View {
         ZStack {
             
             Folder(topSizeModifier: topSizeModifier)
-                .frame(maxWidth: isTapped ? .infinity : 116, maxHeight: isTapped ? .infinity : 87)
+                .frame(maxWidth: isTapped ? .infinity : 350, maxHeight: isTapped ? .infinity : 262)
                 .onTapGesture {
                     withAnimation(.bouncy) {
                         isTapped.toggle()
