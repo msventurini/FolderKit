@@ -73,8 +73,10 @@ public struct Folder: InsettableShape {
     public func path(in rect: CGRect) -> Path {
         
         
-        let referenceSize: CGFloat = (rect.height < rect.width ? 262 : 350)
-        let currentSize: CGFloat = (rect.height < rect.width ? rect.height : rect.width)
+//        let referenceSize: CGFloat = (rect.height < rect.width ? 262 : 350)
+        let referenceSize: CGFloat = 350
+//        let currentSize: CGFloat = (rect.height < rect.width ? rect.height : rect.width)
+        let currentSize: CGFloat = (rect.width)
 //        let referenceSize: CGFloat = (rect.height)
         
 //        let cornerRadius: CGFloat = 24
@@ -136,22 +138,22 @@ struct FolderShapePreview: View {
     
     var body: some View {
         
-        GeometryReader { geometry in
+        
             
             Folder(topSizeModifier: topSizeModifier)
-                .frame(maxWidth: isTapped ? .infinity : 350, maxHeight: isTapped ? .infinity : 262)
+//                .frame(maxWidth: isTapped ? .infinity : 350, maxHeight: isTapped ? .infinity : 262)
+                .frame(maxWidth: isTapped ? .infinity : 150, maxHeight: isTapped ? .infinity : 100)
                 .onTapGesture {
                     withAnimation(.bouncy) {
                         isTapped.toggle()
                     }
                 }
-                .position(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY)
                 .background {
                     Color.blue
                 }
                 .ignoresSafeArea()
             
-        }
+        
 
         
         
@@ -160,6 +162,7 @@ struct FolderShapePreview: View {
 
 #Preview {
     FolderShapePreview()
+//        .frame(width: 150, height: 100)
         .ignoresSafeArea()
 
 }

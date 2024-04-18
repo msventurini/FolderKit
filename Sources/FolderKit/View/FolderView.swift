@@ -52,30 +52,30 @@ public struct FolderView<Content: View>: View{
                 
                 VStack {
                     
-                    if isClicked {
-                        HStack {
-                            BackButton()
-                                .onTapGesture {
-                                    withAnimation(.smooth) {
-                                        isClicked = false
-                                        animationOnProgress = true
-                                        
-                                    } completion: {
-                                        withAnimation(.smooth) {
-                                            animationOnProgress = false
-                                        }
-                                        
-                                        
-                                    }
-                                }
-                            
-                            Spacer()
-                        }
-                        .padding(.top, 60)
-                        .padding(.horizontal, 16)
-                        .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
-
-                    }                    
+//                    if isClicked {
+//                        HStack {
+//                            BackButton()
+//                                .onTapGesture {
+//                                    withAnimation(.smooth) {
+//                                        isClicked = false
+//                                        animationOnProgress = true
+//                                        
+//                                    } completion: {
+//                                        withAnimation(.smooth) {
+//                                            animationOnProgress = false
+//                                        }
+//                                        
+//                                        
+//                                    }
+//                                }
+//                            
+//                            Spacer()
+//                        }
+//                        .padding(.top, 60)
+//                        .padding(.horizontal, 16)
+//                        .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
+//
+//                    }                    
                     if showItems {
                         content
                     }
@@ -133,19 +133,19 @@ public struct FolderView<Content: View>: View{
                 .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
                 
                 
-                .onTapGesture {
-                    withAnimation(.interpolatingSpring) {
-                        isClicked = true
-                        animationOnProgress = true
-                        
-                    } completion: {
-                        withAnimation(.smooth) {
-                            animationOnProgress = false
-                        }
-                        
-                        
-                    }
-                }
+//                .onTapGesture {
+//                    withAnimation(.interpolatingSpring) {
+//                        isClicked = true
+//                        animationOnProgress = true
+//                        
+//                    } completion: {
+//                        withAnimation(.smooth) {
+//                            animationOnProgress = false
+//                        }
+//                        
+//                        
+//                    }
+//                }
                 
                 
                 
@@ -155,9 +155,9 @@ public struct FolderView<Content: View>: View{
             
             
         }
-        
-        .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
-        .ignoresSafeArea()
+        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
+//        .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
+//        .ignoresSafeArea()
 
         .onChange(of: animationOnProgress) { oldValue, newValue in
             withAnimation {
