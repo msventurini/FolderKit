@@ -185,6 +185,7 @@ public struct FolderView<Content: View>: View{
             }
             
         }
+        .ignoresSafeArea()
         
         
         
