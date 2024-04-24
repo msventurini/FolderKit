@@ -10,15 +10,17 @@ import SwiftUI
 
 
 struct ContentView: View {
+    
+    var path = Path(Folder(topSizeModifier: 0)
+        .path(in: .init(x: 0, y: 0, width: 400, height: 400)).cgPath)
+    
     var body: some View {
+        path
         
-        
-        
-        ScaledBezier(bezierPath: .logo)
-//            .aspectRatio(contentMode: .fit)
-            .stroke(lineWidth: 2)
-            
-            .frame(width: 200, height: 500)
+            .frame(width: 400, height: 500)
+//            .background {
+//                Color.blue
+//            }
     }
 }
 
@@ -57,24 +59,27 @@ public func path(in rect: CGRect) -> Path {
     
 }
 
-extension UIBezierPath {
+//extension UIBezierPath {
     /// The Unwrap logo as a Bezier path.
-    static var logo: UIBezierPath {
+public func folderUIPath(xScale: CGFloat ,yScale: CGFloat) -> UIBezierPath {
+//static var logo: UIBezierPath {
         let path = UIBezierPath()
         
+        let referenceScale = min(xScale, yScale)
+    
 //        let begin = CGPoint(x: 0, y: 0.23)
-        print(path.bounds.midX)
-        let cornerRadius: CGFloat = 0.07
+        print(path.bounds.maxX)
+        let cornerRadius: CGFloat = 0.07// * (1 / referenceScale)
 
-        let textWidth: CGFloat = 0.23
+    let textWidth: CGFloat = 0.23 //* (1/xScale)
 
-        let tabCornerRadius: CGFloat = 0.05
-        let begin = CGPoint(x: 0, y: 1 - cornerRadius)
+        let tabCornerRadius: CGFloat = 0.05// * (1/referenceScale)
+    let begin = CGPoint(x: 0, y: (1 - cornerRadius))
 
         
         path.move(to: begin)
         
-        path.addArc(withCenter: CGPointMake(cornerRadius, cornerRadius * 3), radius: cornerRadius, startAngle: Angle(degrees: 180).radians, endAngle: Angle(degrees: 270).radians, clockwise: true)
+        path.addArc(withCenter: CGPointMake(cornerRadius/referenceScale, cornerRadius/referenceScale * xScale), radius: cornerRadius / referenceScale, startAngle: Angle(degrees: 180).radians, endAngle: Angle(degrees: 270).radians, clockwise: true)
 
         path.addArc(withCenter: CGPointMake(1.0 - cornerRadius * 3 - textWidth, tabCornerRadius + cornerRadius/2), radius: tabCornerRadius, startAngle: Angle(degrees: 90).radians, endAngle: Angle(degrees: 45).radians, clockwise: false)
         
@@ -91,7 +96,6 @@ extension UIBezierPath {
         
         return path
     }
-}
 
 
 struct ScaledBezier: Shape {
@@ -99,7 +103,7 @@ struct ScaledBezier: Shape {
 
     func path(in rect: CGRect) -> Path {
         let path = Path(bezierPath.cgPath)
-
+        
         let multiplierX = rect.width
         let multiplierY = rect.height
 
@@ -111,16 +115,4 @@ struct ScaledBezier: Shape {
 
 
 
-struct LabelView: UIViewRepresentable {
-     var text: String
 
-    func makeUIView(context: Context) -> UILabel {
-        let v = UILabel()
-        v.text = text
-        return v
-    }
-
-    func updateUIView(_ uiView: UILabel, context: Context) {
-        
-    }
-}

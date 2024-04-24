@@ -81,6 +81,7 @@ public struct Folder3DPath: InsettableShape {
     var topSizeModifier: CGFloat
     var insetAmount: CGFloat = 0
     
+    
     public init(topSizeModifier: CGFloat) {
         self.topSizeModifier = topSizeModifier
     }
@@ -138,6 +139,13 @@ public struct Folder3DPath: InsettableShape {
         folder.insetAmount += amount
         return folder
     }
+    
+//    public func getCGPath(in rect: CGRect) -> Path {
+////        var folder = self
+//        return folder.getCGPath(in: rect)
+////        return folder
+//    }
+    
     
     
 }
