@@ -39,7 +39,7 @@ struct Folder3DView: View {
     
     
     var body: some View {
-        SceneView(scene: scene, options: [.allowsCameraControl])
+        SceneView(scene: scene, options: [.allowsCameraControl, .autoenablesDefaultLighting])
     }
 
     static func createCameraNode() -> SCNNode {
@@ -69,6 +69,7 @@ class FolderScene: SCNScene {
         let folderGeometry = SCNShape(path: UIBezierPath(cgPath: Folder(topSizeModifier: 0)
             .path(in: .init(x: 0, y: 0, width: 200, height: 100)).cgPath), extrusionDepth: 20) //SCNSphere(radius: 1)
         folderGeometry.materials = [folderMaterial]
+        folderGeometry.chamferRadius = 4
 
         let folderNode = SCNNode(geometry: folderGeometry)
         folderNode.position = SCNVector3(0, 0, 0)
