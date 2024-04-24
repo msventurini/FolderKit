@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SceneKit
 
 
 struct ContentView: View {
@@ -23,16 +23,56 @@ struct ContentView: View {
                 .path(in: .init(x: geometry.frame(in: .local).minX, y: geometry.frame(in: .local).midY, width: geometry.size.width, height: geometry.size.height)).cgPath)
             
         }
-        
-//            .background {
-//                Color.blue
-//            }
     }
 }
 
 #Preview {
-    ContentView()
+//    ContentView()
+    Folder3DView()
 }
 
 
 
+struct Folder3DView: View {
+
+    private let scene = FolderScene()
+    
+    
+    var body: some View {
+        SceneView(scene: scene, options: [.allowsCameraControl])
+    }
+
+    static func createCameraNode() -> SCNNode {
+       let cameraNode = SCNNode()
+       cameraNode.camera = SCNCamera()
+       return cameraNode
+    }
+}
+
+class FolderScene: SCNScene {
+    
+    private var folderNode: SCNNode?
+
+    override init() {
+        super.init()
+        addFolder()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func addFolder() {
+        let folderMaterial = SCNMaterial()
+        folderMaterial.diffuse.contents = UIColor(ciColor: .blue)
+           
+        let folderGeometry = SCNShape(path: UIBezierPath(cgPath: Folder(topSizeModifier: 0)
+            .path(in: .init(x: 0, y: 0, width: 200, height: 200)).cgPath), extrusionDepth: 10) //SCNSphere(radius: 1)
+        folderGeometry.materials = [folderMaterial]
+
+        let folderNode = SCNNode(geometry: folderGeometry)
+        folderNode.position = SCNVector3(0, 0, -30)
+        self.rootNode.addChildNode(folderNode)
+        self.folderNode = folderNode
+    }
+}
