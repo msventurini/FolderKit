@@ -69,7 +69,7 @@ class FolderScene: SCNScene {
         let folderGeometry = SCNShape(path: UIBezierPath(cgPath: Folder(topSizeModifier: 0)
             .path(in: .init(x: 0, y: 0, width: 200, height: 100)).cgPath), extrusionDepth: 20) //SCNSphere(radius: 1)
         folderGeometry.materials = [folderMaterial]
-        folderGeometry.chamferRadius = 4
+        folderGeometry.chamferRadius = 10
 
         let folderNode = SCNNode(geometry: folderGeometry)
         folderNode.position = SCNVector3(0, 0, 0)
