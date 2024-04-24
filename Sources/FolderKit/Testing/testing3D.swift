@@ -15,9 +15,15 @@ struct ContentView: View {
         .path(in: .init(x: 0, y: 0, width: 400, height: 400)).cgPath)
     
     var body: some View {
-        path
         
-            .frame(width: 400, height: 500)
+        
+        GeometryReader { geometry in
+            
+            Path(Folder(topSizeModifier: 0)
+                .path(in: .init(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY, width: 400, height: 400)).cgPath)
+            
+        }
+        
 //            .background {
 //                Color.blue
 //            }

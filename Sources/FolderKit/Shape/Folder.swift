@@ -40,7 +40,7 @@ public struct Folder: InsettableShape {
         
         let textWidth: CGFloat = 82
         
-        let begin = CGPoint(x: rect.minX, y: rect.minY + 80)
+        let begin = CGPoint(x: rect.minX, y: rect.maxY - cornerRadius)
 
 //        let begin = CGPoint(x: cornerWidth, y: rect.minY + 80)
         
@@ -61,7 +61,7 @@ public struct Folder: InsettableShape {
         
         path.addArc(center: CGPoint(x: rect.minX + cornerRadius, y: rect.maxY - cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 180), clockwise: false)
         
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 80))
+//        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 80))
         
         return path
         
@@ -170,8 +170,9 @@ struct FolderShapePreview: View {
         
         
             
-            Folder3DPath(topSizeModifier: topSizeModifier)
+            Folder(topSizeModifier: topSizeModifier)
 //                .frame(maxWidth: isTapped ? .infinity : 350, maxHeight: isTapped ? .infinity : 262)
+            .stroke()
                 .frame(maxWidth: isTapped ? .infinity : 150, maxHeight: isTapped ? .infinity : 100)
                 .onTapGesture {
                     withAnimation(.bouncy) {
