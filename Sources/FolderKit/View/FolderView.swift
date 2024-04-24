@@ -47,35 +47,35 @@ public struct FolderView<Content: View>: View{
                 Folder(topSizeModifier: 0)
                     .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             }
-            .padding(.top, isClicked ? 0 : 8)
+            .padding([.top, .leading], isClicked ? 0 : 8)
             .overlay {
                 
                 VStack {
                     
-                    if isClicked {
-                        HStack {
-                            BackButton()
-                                .onTapGesture {
-                                    withAnimation(.smooth) {
-                                        isClicked = false
-                                        animationOnProgress = true
-                                        
-                                    } completion: {
-                                        withAnimation(.smooth) {
-                                            animationOnProgress = false
-                                        }
-                                        
-                                        
-                                    }
-                                }
-                            
-                            Spacer()
-                        }
-                        .padding(.top, 60)
-                        .padding(.horizontal, 16)
-                        .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
-
-                    }                    
+//                    if isClicked {
+//                        HStack {
+//                            BackButton()
+//                                .onTapGesture {
+//                                    withAnimation(.smooth) {
+//                                        isClicked = false
+//                                        animationOnProgress = true
+//                                        
+//                                    } completion: {
+//                                        withAnimation(.smooth) {
+//                                            animationOnProgress = false
+//                                        }
+//                                        
+//                                        
+//                                    }
+//                                }
+//                            
+//                            Spacer()
+//                        }
+//                        .padding(.top, 60)
+//                        .padding(.horizontal, 16)
+//                        .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
+//
+//                    }                    
                     if showItems {
                         content
                     }
@@ -87,7 +87,9 @@ public struct FolderView<Content: View>: View{
                     Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
                         .fill(color ?? .cyan)
                     Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
+//                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
                         .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+
                 }
                 
                 .padding([.trailing, .bottom], (isClicked ? 0 : 8))
@@ -131,19 +133,19 @@ public struct FolderView<Content: View>: View{
                 .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
                 
                 
-                .onTapGesture {
-                    withAnimation(.interpolatingSpring) {
-                        isClicked = true
-                        animationOnProgress = true
-                        
-                    } completion: {
-                        withAnimation(.smooth) {
-                            animationOnProgress = false
-                        }
-                        
-                        
-                    }
-                }
+//                .onTapGesture {
+//                    withAnimation(.interpolatingSpring) {
+//                        isClicked = true
+//                        animationOnProgress = true
+//                        
+//                    } completion: {
+//                        withAnimation(.smooth) {
+//                            animationOnProgress = false
+//                        }
+//                        
+//                        
+//                    }
+//                }
                 
                 
                 
@@ -153,8 +155,10 @@ public struct FolderView<Content: View>: View{
             
             
         }
-        
-        .ignoresSafeArea()
+        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
+//        .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
+//        .ignoresSafeArea()
+
         .onChange(of: animationOnProgress) { oldValue, newValue in
             withAnimation {
                 
@@ -171,7 +175,7 @@ public struct FolderView<Content: View>: View{
             
         }
         .onChange(of: isClicked) { oldValue, newValue in
-            withAnimation {
+            withAnimation(.linear) {
                 if newValue == true && animationOnProgress == true {
                     showItems = true
                 } else {
@@ -181,6 +185,7 @@ public struct FolderView<Content: View>: View{
             }
             
         }
+        .ignoresSafeArea()
         
         
         
@@ -249,8 +254,10 @@ struct testeFolder: View {
                 }
                     .matchedGeometryEffect(id: "have", in: namespace)
                     .transition(.scale(1))
-                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
-                    .padding(.top, haveFolderIsClicked ? 0 : 500)
+//                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
+//                    .frame(width: 350, height: 262)
+//                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 262)
+//                    .padding(.top, haveFolderIsClicked ? 0 : 500)
 
 
             
