@@ -20,7 +20,7 @@ struct ContentView: View {
         GeometryReader { geometry in
             
             Path(Folder(topSizeModifier: 0)
-                .path(in: .init(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY, width: 400, height: 400)).cgPath)
+                .path(in: .init(x: geometry.frame(in: .local).minX, y: geometry.frame(in: .local).midY, width: geometry.size.width, height: geometry.size.height)).cgPath)
             
         }
         
