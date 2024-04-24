@@ -12,7 +12,7 @@ import SceneKit
 struct ContentView: View {
     
     var path = Path(Folder(topSizeModifier: 0)
-        .path(in: .init(x: 0, y: 0, width: 400, height: 400)).cgPath)
+        .path(in: .init(x: 0, y: 0, width: 400, height: 300)).cgPath)
     
     var body: some View {
         
@@ -67,11 +67,11 @@ class FolderScene: SCNScene {
         folderMaterial.diffuse.contents = UIColor(ciColor: .blue)
            
         let folderGeometry = SCNShape(path: UIBezierPath(cgPath: Folder(topSizeModifier: 0)
-            .path(in: .init(x: 0, y: 0, width: 200, height: 200)).cgPath), extrusionDepth: 10) //SCNSphere(radius: 1)
+            .path(in: .init(x: 0, y: 0, width: 200, height: 100)).cgPath), extrusionDepth: 20) //SCNSphere(radius: 1)
         folderGeometry.materials = [folderMaterial]
 
         let folderNode = SCNNode(geometry: folderGeometry)
-        folderNode.position = SCNVector3(0, 0, -30)
+        folderNode.position = SCNVector3(0, 0, 0)
         self.rootNode.addChildNode(folderNode)
         self.folderNode = folderNode
     }
