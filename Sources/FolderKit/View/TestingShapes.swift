@@ -327,9 +327,27 @@ public struct Folder6: InsettableShape {
         var downPath = Path()
         downPath.move(to: begin)
         
-        downPath.addArc(center: CGPoint(x: rect.minX + cornerRadius, y: rect.minY + cornerRadius * 3), radius: cornerRadius, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
+        downPath.addArc(
+            center:
+                CGPoint(
+                    x: rect.minX + cornerRadius,
+                    y: rect.minY + cornerRadius * (3 - (2 * frontFolderTabSizeDecrease))),
+            radius: cornerRadius,
+            startAngle: Angle(degrees: 180),
+            endAngle: Angle(degrees: 270),
+            clockwise: false
+        )
         
-        downPath.addArc(center: CGPoint(x: rect.maxX - cornerRadius*3 - textWidth, y: rect.minY + tabCornerRadius + cornerRadius/2), radius: tabCornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 45), clockwise: true)
+        downPath.addArc(
+            center:
+                CGPoint(
+                    x: rect.maxX - cornerRadius * 3 - textWidth,
+                    y: rect.minY + tabCornerRadius + cornerRadius/2),
+            radius: tabCornerRadius,
+            startAngle: Angle(degrees: 90),
+            endAngle: Angle(degrees: 45),
+            clockwise: true
+        )
         
         downPath.addArc(center: CGPoint(x: rect.maxX - cornerRadius - textWidth, y: rect.minY + tabCornerRadius), radius: tabCornerRadius, startAngle: Angle(degrees: 225), endAngle: Angle(degrees: 270), clockwise: false)
 
@@ -391,7 +409,7 @@ public struct Folder6: InsettableShape {
 
 struct TestingShapes: View {
     
-    @State var frontFolderTabSizeDecrease: CGFloat = 0.5
+    @State var frontFolderTabSizeDecrease: CGFloat = 0
     
     var body: some View {
         
@@ -402,13 +420,13 @@ struct TestingShapes: View {
             .background(.blue)
             .onTapGesture {
                 
-                if frontFolderTabSizeDecrease == 0.5 {
+                if frontFolderTabSizeDecrease == 1 {
                     withAnimation(.bouncy) {
                         frontFolderTabSizeDecrease = 0
                     }
                 } else {
                     withAnimation(.bouncy) {
-                        frontFolderTabSizeDecrease = 0.5
+                        frontFolderTabSizeDecrease = 1
                     }
                 }
                 
