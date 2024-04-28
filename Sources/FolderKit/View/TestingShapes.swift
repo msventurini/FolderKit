@@ -201,13 +201,13 @@ public struct Folder5: InsettableShape {
         self.topFolderSizeDecrease = 0
     }
     
-    public init(topSizeModifier: CGFloat = 0, insetAmount: CGFloat = 0, topFolderSize: CGFloat = 0) {
+    public init(topSizeModifier: CGFloat = 0, insetAmount: CGFloat = 0, topFolderSizeDecrease: CGFloat = 0) {
         self.topSizeModifier = topSizeModifier
         self.insetAmount = insetAmount
-        self.topFolderSizeDecrease = topFolderSize
+        self.topFolderSizeDecrease = topFolderSizeDecrease
 
     }
-//    topFolderSizeDecrease
+//    topFolderSizeDecrease, vai de 1 a 0.5
     public func path(in rect: CGRect) -> Path {
         
 
@@ -217,7 +217,7 @@ public struct Folder5: InsettableShape {
         let tabHeight: CGFloat = 48
         let tabCornerRadius: CGFloat = 18 * (currentSize/referenceSize)
         let textWidth: CGFloat = 82
-        let begin = CGPoint(x: rect.minX, y: rect.maxY - cornerRadius)
+        let begin = CGPoint(x: rect.minX, y: rect.maxY - (cornerRadius) - (rect.height * topFolderSizeDecrease) )
 
         var downPath = Path()
         downPath.move(to: begin)
@@ -234,11 +234,12 @@ public struct Folder5: InsettableShape {
             center:
                 CGPoint(
                     x:
-                        rect.maxX - (cornerRadius - (cornerRadius * (1 - topFolderSizeDecrease))),
+                        rect.maxX - cornerRadius,
                     y:
-                        rect.maxY - (cornerRadius - (cornerRadius * (1 - topFolderSizeDecrease)))),
+                        rect.maxY - (cornerRadius) - (rect.height * topFolderSizeDecrease)
+                ),
             radius:
-                cornerRadius - (cornerRadius * (1 - topFolderSizeDecrease)),
+                cornerRadius,
             startAngle:
                 Angle(degrees: 0),
             endAngle:
@@ -251,7 +252,8 @@ public struct Folder5: InsettableShape {
             center:
                 CGPoint(
                     x: rect.minX + cornerRadius,
-                    y: rect.maxY - cornerRadius),
+                    y: rect.maxY - (cornerRadius) - (rect.height * topFolderSizeDecrease)
+                ),
             radius:
                 cornerRadius,
             startAngle:
@@ -261,14 +263,10 @@ public struct Folder5: InsettableShape {
             clockwise: false
         )
         
-        downPath.closeSubpath()
-        var topPath = Path()
 
-        topPath.addPath(downPath)
-        
         var path3 = Path()
         
-        path3.addPath(downPath, transform: .init(scaleX: 1, y: topFolderSizeDecrease))
+        path3.addPath(downPath)
         
 //        path3.intersection(topPath)
 //        path3.addPath(topPath)
@@ -288,11 +286,11 @@ public struct Folder5: InsettableShape {
 
 struct TestingShapes: View {
     
-    @State var topFolderSize: CGFloat = 1
+    @State var topFolderSize: CGFloat = 0.5
     
     var body: some View {
         
-        Folder5(topFolderSize: topFolderSize)
+        Folder5(topFolderSizeDecrease: topFolderSize)
             .fill(.pink)
             .stroke(.black, lineWidth: 3)
             .frame(width: 350, height: 262)
@@ -301,7 +299,7 @@ struct TestingShapes: View {
                 
                 if topFolderSize == 0.5 {
                     withAnimation(.bouncy) {
-                        topFolderSize = 1
+                        topFolderSize = 0
                     }
                 } else {
                     withAnimation(.bouncy) {
