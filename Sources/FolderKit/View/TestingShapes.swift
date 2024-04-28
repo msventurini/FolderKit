@@ -129,11 +129,11 @@ public struct Folder4: InsettableShape {
             center:
                 CGPoint(
                     x:
-                        rect.maxX - (cornerRadius - (cornerRadius * bottomCornerValue)),
+                        rect.maxX - (cornerRadius - (cornerRadius * (1 - bottomCornerValue))),
                     y:
-                        rect.maxY - (cornerRadius - (cornerRadius * bottomCornerValue))),
+                        rect.maxY - (cornerRadius - (cornerRadius * (1 - bottomCornerValue)))),
             radius:
-                cornerRadius - (cornerRadius * bottomCornerValue),
+                cornerRadius - (cornerRadius * (1 - bottomCornerValue)),
             startAngle:
                 Angle(degrees: 0),
             endAngle:
@@ -142,7 +142,19 @@ public struct Folder4: InsettableShape {
                 false
         )
         
-        downPath.addArc(center: CGPoint(x: rect.minX + cornerRadius, y: rect.maxY - cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 180), clockwise: false)
+        downPath.addArc(
+            center:
+                CGPoint(
+                    x: rect.minX + cornerRadius,
+                    y: rect.maxY - cornerRadius),
+            radius:
+                cornerRadius,
+            startAngle:
+                Angle(degrees: 90),
+            endAngle:
+                Angle(degrees: 180),
+            clockwise: false
+        )
         
         var topPath = Path()
 
