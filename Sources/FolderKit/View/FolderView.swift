@@ -51,35 +51,12 @@ public struct FolderView<Content: View>: View{
             .overlay {
                 
                 VStack {
-                    
-//                    if isClicked {
-//                        HStack {
-//                            BackButton()
-//                                .onTapGesture {
-//                                    withAnimation(.smooth) {
-//                                        isClicked = false
-//                                        animationOnProgress = true
-//                                        
-//                                    } completion: {
-//                                        withAnimation(.smooth) {
-//                                            animationOnProgress = false
-//                                        }
-//                                        
-//                                        
-//                                    }
-//                                }
-//                            
-//                            Spacer()
-//                        }
-//                        .padding(.top, 60)
-//                        .padding(.horizontal, 16)
-//                        .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
-//
-//                    }                    
                     if showItems {
                         content
+                            .transition(.identity)
                     }
                 }
+                .clipped()
             }
             
             .overlay(alignment: .bottom) {
@@ -250,27 +227,66 @@ struct testeFolder: View {
             
                 FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                     Text("oi")
+                    ScrollView {
+                        VStack {
+                            HStack {
+                                
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                
+                            }
+                            .padding()
+                            HStack {
+                                
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                
+                            }
+                            .padding()
+                            HStack {
+                                
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                
+                            }
+                            .padding()
+                            HStack {
+                                
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                Rectangle()
+                                    .aspectRatio(150/208, contentMode: .fit)
+                                
+                            }
+                            .padding()
+                        }
+
+                    }
 
                 }
                     .matchedGeometryEffect(id: "have", in: namespace)
-                    .transition(.scale(1))
-//                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
-//                    .frame(width: 350, height: 262)
-//                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 262)
-//                    .padding(.top, haveFolderIsClicked ? 0 : 500)
-
-
-            
-            
-            
-            
-            Button {
-                withAnimation(.bouncy) {
-                    buttonIsTapped.toggle()
-                }
-            } label: {
-                Text("teste")
-            }
+//                    .transition(.scale(1))
+                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
+                    .onTapGesture {
+                        
+                        var transaction = Transaction(animation: .bouncy)
+                        
+                        transaction.disablesAnimations = true
+                        
+                        withTransaction(transaction) {
+                            haveFolderIsClicked.toggle()
+                        }
+                        
+//                        withAnimation(.bouncy) {
+//                            haveFolderIsClicked.toggle()
+//                        }
+                    }
             
 
         }
