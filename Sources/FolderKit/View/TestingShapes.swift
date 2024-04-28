@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Mudança de angulo da pasta superior ok
 public struct Folder3: InsettableShape {
 
     var topSizeModifier: CGFloat
@@ -79,6 +80,7 @@ public struct Folder3: InsettableShape {
     
 }
 
+//Mudança de corner radius de ambas as pastas ok
 public struct Folder4: InsettableShape {
 
     var topSizeModifier: CGFloat
@@ -145,10 +147,10 @@ public struct Folder4: InsettableShape {
         downPath.addArc(
             center:
                 CGPoint(
-                    x: rect.minX + cornerRadius,
-                    y: rect.maxY - cornerRadius),
+                    x: rect.minX + (cornerRadius - (cornerRadius * (1 - bottomCornerValue))),
+                    y: rect.maxY - (cornerRadius - (cornerRadius * (1 - bottomCornerValue)))),
             radius:
-                cornerRadius,
+                cornerRadius - (cornerRadius * (1 - bottomCornerValue)),
             startAngle:
                 Angle(degrees: 90),
             endAngle:
@@ -156,13 +158,16 @@ public struct Folder4: InsettableShape {
             clockwise: false
         )
         
+        downPath.closeSubpath()
         var topPath = Path()
 
-        topPath.addPath(downPath, transform: CGAffineTransformConcat(.init(scaleX: 1, y: bottomCornerValue), .init(translationX: 0, y: rect.size.height * (1 - bottomCornerValue))))
+        topPath.addPath(downPath)
         
         var path3 = Path()
         
         path3.addPath(downPath)
+        
+        path3.intersection(topPath)
         path3.addPath(topPath)
         
         return path3
