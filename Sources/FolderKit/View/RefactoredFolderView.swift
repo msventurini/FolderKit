@@ -50,12 +50,6 @@ public struct RefactoredFolderView<Content: View>: View{
                 .fill(shadow ?? .blue)
                 .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
                 .padding([.top, .leading], isClicked ? 0 : 8)
-            
-            if showItems {
-                content
-                    .padding(.top, 86)
-                    .transition(.identity)
-            }
         }
         .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
 
@@ -64,6 +58,9 @@ public struct RefactoredFolderView<Content: View>: View{
             VStack {
                 
                 if isClicked {
+                    content
+                        .padding(.top, 86)
+                        .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
                     Spacer()
                 }
                 
