@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct FrontFolder: InsettableShape {
+public struct AnimatableFolder: InsettableShape {
 
     
     
@@ -74,8 +74,9 @@ public struct FrontFolder: InsettableShape {
         
         
         
-        let begin = CGPoint(x: rect.midX, y: rect.maxY - bottomInsetSize - (rect.height * topFolderSizeDecrease))
-        let end = CGPoint(x: rect.midX, y: rect.maxY - bottomInsetSize - (rect.height * topFolderSizeDecrease))
+        let begin = CGPoint(
+            x: rect.midX * (1 - frontFolderDivisionDecrease) , y: rect.maxY - bottomInsetSize - (rect.height * topFolderSizeDecrease))
+        let end = CGPoint(x: rect.midX + (rect.midX * frontFolderDivisionDecrease) , y: rect.maxY - bottomInsetSize - (rect.height * topFolderSizeDecrease))
 
         
         
@@ -201,14 +202,17 @@ struct TestingShapes: View {
         
         var frontFolderTabSizeDecrease: CGFloat = 0
 
+        var frontFolderDivisionDecrease: CGFloat = 0
+
+        
     }
     
     var body: some View {
         
         KeyframeAnimator(initialValue: AnimationValues(), trigger: isTapped) { value in
             
-            FrontFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease, frontFolderTabSizeDecrease: value.frontFolderTabSizeDecrease)
-                        .fill(.pink)
+            AnimatableFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease, frontFolderTabSizeDecrease: value.frontFolderTabSizeDecrease, frontFolderDivisionDecrease: value.frontFolderDivisionDecrease)
+//                        .fill(.pink)
                         .stroke(.black, lineWidth: 3)
                         .frame(width: 350, height: 262)
                         .background(.blue)
@@ -249,6 +253,12 @@ struct TestingShapes: View {
             }
             
             KeyframeTrack(\.frontFolderTabSizeDecrease) {
+                CubicKeyframe(0, duration: 0.5)
+                CubicKeyframe(0.5, duration: 0.3)
+                CubicKeyframe(1, duration: 0.2)
+            }
+            
+            KeyframeTrack(\.frontFolderDivisionDecrease) {
                 CubicKeyframe(0, duration: 0.5)
                 CubicKeyframe(0.5, duration: 0.3)
                 CubicKeyframe(1, duration: 0.2)
