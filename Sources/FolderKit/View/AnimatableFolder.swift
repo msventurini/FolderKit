@@ -222,6 +222,7 @@ struct TestingShapes: View {
         var frontFolderTranslationRatio: CGFloat = 0
         
         var maxFrameSizeX: CGFloat = 350
+        var maxFrameSizeY: CGFloat = 262
         
     }
     
@@ -243,67 +244,75 @@ struct TestingShapes: View {
 
                         
                         .background(.blue)
-                        .frame(maxWidth: isExpanded ? .infinity : 350, maxHeight: isExpanded ? .infinity : 262)
+                        .frame(maxWidth: value.maxFrameSizeX, maxHeight: value.maxFrameSizeY)
 
         } keyframes: { value in
+            
+            KeyframeTrack(\.maxFrameSizeY) {
+                LinearKeyframe(262, duration: 2.5)
+                LinearKeyframe(524, duration: 1.0)
+                
+            }
+            
             KeyframeTrack(\.frontFolderLeftInsetSize) {
-                CubicKeyframe(8, duration: 0.5)
-                CubicKeyframe(4, duration: 0.5)
-                CubicKeyframe(0, duration: 0.5)
+                LinearKeyframe(8, duration: 0.5)
+                LinearKeyframe(4, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
             }
 //            
             KeyframeTrack(\.frontFolderBottomInsetSize) {
-                CubicKeyframe(8, duration: 0.5)
-                CubicKeyframe(4, duration: 0.5)
-                CubicKeyframe(0, duration: 0.5)
+                LinearKeyframe(8, duration: 0.5)
+                LinearKeyframe(4, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
             }
             KeyframeTrack(\.frontFolderRotationValue) {
-                CubicKeyframe(1, duration: 0.5)
-                CubicKeyframe(0.5, duration: 0.5)
-                CubicKeyframe(0.0, duration: 0.5)
-                CubicKeyframe(-0.5, duration: 0.5)
-                CubicKeyframe(-1, duration: 0.5)
+                LinearKeyframe(1, duration: 0.5)
+                LinearKeyframe(0.5, duration: 0.5)
+                LinearKeyframe(0.0, duration: 0.5)
+                LinearKeyframe(-0.5, duration: 0.5)
+                LinearKeyframe(-1, duration: 0.5)
             }
 //            
             KeyframeTrack(\.bottomCornerValuesProportion) {
-                CubicKeyframe(1, duration: 0.5)
-                CubicKeyframe(0.5, duration: 0.5)
-                CubicKeyframe(0, duration: 0.5)
+                LinearKeyframe(1, duration: 0.5)
+                LinearKeyframe(0.5, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
+            }
+//
+//            
+            KeyframeTrack(\.topFolderSizeDecrease) {
+                LinearKeyframe(0, duration: 2.5)
+                LinearKeyframe(0.25, duration: 0.5)
+                LinearKeyframe(0.5, duration: 0.5)
             }
 //            
-//            KeyframeTrack(\.bottomCornerValuesProportion) {
-//                CubicKeyframe(1, duration: 0.5)
-//                CubicKeyframe(0.5, duration: 0.3)
-//                CubicKeyframe(0, duration: 0.2)
-//            }
-//            
-//            KeyframeTrack(\.topFolderSizeDecrease) {
-//                CubicKeyframe(0, duration: 0.5)
-//                CubicKeyframe(0.25, duration: 0.3)
-//                CubicKeyframe(0.5, duration: 0.2)
-//            }
-//            
             KeyframeTrack(\.frontFolderTabSizeDecrease) {
-                CubicKeyframe(0, duration: 0.75)
-                CubicKeyframe(0.25, duration: 0.75)
-                CubicKeyframe(0.5, duration: 0.25)
-                CubicKeyframe(0.75, duration: 0.15)
-                CubicKeyframe(1, duration: 0.05)
+                LinearKeyframe(0, duration: 0.75)
+                LinearKeyframe(0.25, duration: 0.75)
+                LinearKeyframe(0.5, duration: 0.25)
+                LinearKeyframe(0.75, duration: 0.15)
+                LinearKeyframe(1, duration: 0.05)
             }
             
             KeyframeTrack(\.frontFolderDivisionDecrease) {
                 LinearKeyframe(0, duration: 1.5)
-                CubicKeyframe(0.5, duration: 0.3)
-                CubicKeyframe(1, duration: 0.2)
+                LinearKeyframe(0.5, duration: 0.3)
+                LinearKeyframe(1, duration: 0.2)
             }
             
             KeyframeTrack(\.frontFolderTranslationRatio) {
-                CubicKeyframe(0, duration: 0.5)
-                CubicKeyframe(0.5, duration: 0.5)
-                CubicKeyframe(1, duration: 0.5)
-                CubicKeyframe(1.5, duration: 0.5)
-                CubicKeyframe(2, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
+                LinearKeyframe(0.5, duration: 0.5)
+                LinearKeyframe(1, duration: 0.5)
+                LinearKeyframe(1.5, duration: 0.5)
+                LinearKeyframe(2, duration: 0.5)
+                LinearKeyframe(1.5, duration: 0.5)
+                LinearKeyframe(1.0, duration: 0.5)
             }
+            
+            
+            
+            
 
             
         }
