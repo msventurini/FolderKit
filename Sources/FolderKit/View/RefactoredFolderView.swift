@@ -18,9 +18,7 @@ import SwiftUI
 import SwiftUI
 
 public struct RefactoredFolderView<Content: View>: View{
-    //public struct FolderView: View {
-    
-    // Debugando, depois estes voltam
+
     let text: String?
     let color: Color
     let shadow: Color
@@ -31,7 +29,6 @@ public struct RefactoredFolderView<Content: View>: View{
     
     @ScaledMetric(relativeTo: .body) var topSizeModifier = 50
     @Environment(\.dynamicTypeSize) private var sizeCategory
-    
     
     let content: Content
     
@@ -58,69 +55,29 @@ public struct RefactoredFolderView<Content: View>: View{
                 content
                     .transition(.identity)
             }
-            
-            Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
-                .fill(color ?? .cyan)
-                .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                .frame(maxHeight: (isClicked ? 0 : .infinity))
-                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
-            
-        }
-        .onChange(of: animationOnProgress) { oldValue, newValue in
-            withAnimation {
-                
-                if newValue == true && animationOnProgress == true {
-                    showItems = true
-                } else {
-                    showItems = isClicked && !animationOnProgress
-                }
-            }
-        }
-        .onChange(of: isClicked) { oldValue, newValue in
-            withAnimation(.linear) {
-                if newValue == true && animationOnProgress == true {
-                    showItems = true
-                } else {
-                    showItems = isClicked && !animationOnProgress
-                }
-            }
         }
         .ignoresSafeArea()
-    }
-    
-    
-    func getTopFolderSpacer(fontSize: DynamicTypeSize) -> Double {
-        
-        switch fontSize {
-        case .xSmall:
-            12
-        case .small:
-            16
-        case .medium:
-            20
-        case .large:
-            22
-        case .xLarge:
-            30
-        case .xxLarge:
-            34
-        case .xxxLarge:
-            42
-        case .accessibility1:
-            60
-        case .accessibility2:
-            78
-        case .accessibility3:
-            98
-        case .accessibility4:
-            120
-        case .accessibility5:
-            140
-            
-        @unknown default:
-            fatalError()
-        }
+
+        Folder(topSizeModifier: 0)
+            .fill(color ?? .cyan)
+            .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+            .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+            .frame(maxHeight: (isClicked ? 0 : .infinity))
+            .visualEffect { content, geometryProxy in
+                content
+                    .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+                
+            }
+
+            .onChange(of: isClicked) { oldValue, newValue in
+                withAnimation(.linear) {
+                    if newValue == true && animationOnProgress == true {
+                        showItems = true
+                    } else {
+                        showItems = isClicked && !animationOnProgress
+                    }
+                }
+            }
     }
     
 }
