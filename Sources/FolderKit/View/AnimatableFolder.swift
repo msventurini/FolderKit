@@ -250,17 +250,17 @@ struct TestingShapes: View {
                 
             }
             
-//            KeyframeTrack(\.frontFolderLeftInsetSize) {
-//                LinearKeyframe(8, duration: 0.5)
-//                LinearKeyframe(4, duration: 0.5)
-//                LinearKeyframe(0, duration: 0.5)
-//            }
-//            
-//            KeyframeTrack(\.frontFolderBottomInsetSize) {
-//                LinearKeyframe(8, duration: 0.5)
-//                LinearKeyframe(4, duration: 0.5)
-//                LinearKeyframe(0, duration: 0.5)
-//            }
+            KeyframeTrack(\.frontFolderLeftInsetSize) {
+                LinearKeyframe(8, duration: 0.5)
+                LinearKeyframe(4, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
+            }
+            
+            KeyframeTrack(\.frontFolderBottomInsetSize) {
+                LinearKeyframe(8, duration: 0.5)
+                LinearKeyframe(4, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
+            }
             KeyframeTrack(\.frontFolderRotationValue) {
                 LinearKeyframe(1, duration: 0.5)
                 LinearKeyframe(0.5, duration: 0.5)
@@ -268,44 +268,43 @@ struct TestingShapes: View {
                 LinearKeyframe(-0.5, duration: 0.5)
                 LinearKeyframe(-1, duration: 0.5)
             }
-//            
-//            KeyframeTrack(\.bottomCornerValuesProportion) {
-//                LinearKeyframe(1, duration: 0.5)
-//                LinearKeyframe(0.5, duration: 0.5)
-//                LinearKeyframe(0, duration: 0.5)
-//            }
-//
+            
+            KeyframeTrack(\.bottomCornerValuesProportion) {
+                LinearKeyframe(1, duration: 0.5)
+                LinearKeyframe(0.5, duration: 0.5)
+                LinearKeyframe(0, duration: 0.5)
+            }
+
 
             
             KeyframeTrack(\.topFolderSizeDecrease) {
                 LinearKeyframe(0, duration: 2.5)
                 LinearKeyframe(0.5, duration: 1.0)
             }
-//            
-//            KeyframeTrack(\.frontFolderTabSizeDecrease) {
-//                LinearKeyframe(0, duration: 0.75)
-//                LinearKeyframe(0.25, duration: 0.75)
-//                LinearKeyframe(0.5, duration: 0.25)
-//                LinearKeyframe(0.75, duration: 0.15)
-//                LinearKeyframe(1, duration: 0.05)
-//            }
             
-//            KeyframeTrack(\.frontFolderDivisionDecrease) {
-//                LinearKeyframe(0, duration: 1.5)
-//                LinearKeyframe(0.5, duration: 0.3)
-//                LinearKeyframe(1, duration: 0.2)
-//            }
+            KeyframeTrack(\.frontFolderTabSizeDecrease) {
+                LinearKeyframe(0, duration: 0.75)
+                LinearKeyframe(0.25, duration: 0.75)
+                LinearKeyframe(0.5, duration: 0.25)
+                LinearKeyframe(0.75, duration: 0.15)
+                LinearKeyframe(1, duration: 0.05)
+            }
+            
+            KeyframeTrack(\.frontFolderDivisionDecrease) {
+                LinearKeyframe(0, duration: 1.5)
+                LinearKeyframe(0.5, duration: 0.3)
+                LinearKeyframe(1, duration: 0.2)
+            }
             
             KeyframeTrack(\.frontFolderTranslationRatio) {
                 LinearKeyframe(0, duration: 0.5)
                 LinearKeyframe(0.5, duration: 0.5)
-                LinearKeyframe(1, duration: 1.5)
                 LinearKeyframe(1, duration: 0.5)
-//                LinearKeyframe(0, duration: 0.5)
-//                LinearKeyframe(1.5, duration: 0.5)
-//                LinearKeyframe(2, duration: 0.5)
-//                LinearKeyframe(1.5, duration: 0.5)
-//                LinearKeyframe(1.0, duration: 0.5)
+                
+                LinearKeyframe(1.5, duration: 0.5)
+                LinearKeyframe(2, duration: 0.5)
+                LinearKeyframe(1.5, duration: 0.5)
+                LinearKeyframe(1.0, duration: 0.5)
             }
             
             
