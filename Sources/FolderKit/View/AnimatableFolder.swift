@@ -29,7 +29,7 @@ public struct FrontFolder: InsettableShape {
 
     var frontFolderTabSizeDecrease: CGFloat
 
-
+    var frontFolderDivisionDecrease: CGFloat
     
     public init(
         topSizeModifier: CGFloat = 0,
@@ -39,7 +39,9 @@ public struct FrontFolder: InsettableShape {
         rotationValue: CGFloat = 0,
         bottomCornerValuesProportion: CGFloat = 0,
         topFolderSizeDecrease: CGFloat = 0,
-        frontFolderTabSizeDecrease: CGFloat = 0) {
+        frontFolderTabSizeDecrease: CGFloat = 0,
+        frontFolderDivisionDecrease: CGFloat = 0
+    ) {
             
         self.topSizeModifier = topSizeModifier
         self.insetAmount = insetAmount
@@ -53,8 +55,9 @@ public struct FrontFolder: InsettableShape {
             
         self.topFolderSizeDecrease = topFolderSizeDecrease
 
-            self.frontFolderTabSizeDecrease = frontFolderTabSizeDecrease
-            
+        self.frontFolderTabSizeDecrease = frontFolderTabSizeDecrease
+        
+        self.frontFolderDivisionDecrease = frontFolderDivisionDecrease
     }
 
 //    deixa a pasta traseira no topo superior
