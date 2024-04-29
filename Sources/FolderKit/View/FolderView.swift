@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct FolderView<Content: View>: View{
-//public struct FolderView: View {
+    //public struct FolderView: View {
     
     // Debugando, depois estes voltam
     let text: String?
@@ -25,7 +25,7 @@ public struct FolderView<Content: View>: View{
     
     
     let content: Content
-
+    
     public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
         self.text = text
         self.color = color
@@ -44,29 +44,21 @@ public struct FolderView<Content: View>: View{
             ZStack {
                 Folder(topSizeModifier: 0)
                     .fill(shadow ?? .blue)
-                Folder(topSizeModifier: 0)
                     .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             }
             .padding([.top, .leading], isClicked ? 0 : 8)
             .overlay {
-                
-                VStack {
-                    if showItems {
-                        content
-                            .transition(.identity)
-                    }
+                if showItems {
+                    content
+                        .transition(.identity)
                 }
-                .clipped()
             }
             
             .overlay(alignment: .bottom) {
                 ZStack {
                     Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
                         .fill(color ?? .cyan)
-                    Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
-//                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
                         .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-
                 }
                 
                 .padding([.trailing, .bottom], (isClicked ? 0 : 8))
@@ -94,48 +86,15 @@ public struct FolderView<Content: View>: View{
                             Spacer()
                             
                         }
-
+                        
                         .transition(.opacity)
                     }
-                    
-                    
-//                    .opacity(propertiesTextOpacity)
-                    
-                    
-                    
                 }
                 .frame(maxHeight: (isClicked ? 0 : .infinity))
-                
-                
                 .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
-                
-                
-//                .onTapGesture {
-//                    withAnimation(.interpolatingSpring) {
-//                        isClicked = true
-//                        animationOnProgress = true
-//                        
-//                    } completion: {
-//                        withAnimation(.smooth) {
-//                            animationOnProgress = false
-//                        }
-//                        
-//                        
-//                    }
-//                }
-                
-                
-                
-                
             }
-            
-            
-            
         }
         .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
-//        .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
-//        .ignoresSafeArea()
-
         .onChange(of: animationOnProgress) { oldValue, newValue in
             withAnimation {
                 
@@ -144,12 +103,7 @@ public struct FolderView<Content: View>: View{
                 } else {
                     showItems = isClicked && !animationOnProgress
                 }
-                
-                
-                
-                
             }
-            
         }
         .onChange(of: isClicked) { oldValue, newValue in
             withAnimation(.linear) {
@@ -158,19 +112,14 @@ public struct FolderView<Content: View>: View{
                 } else {
                     showItems = isClicked && !animationOnProgress
                 }
-                
             }
-            
         }
         .ignoresSafeArea()
-        
-        
-        
     }
     
     
     func getTopFolderSpacer(fontSize: DynamicTypeSize) -> Double {
-
+        
         switch fontSize {
         case .xSmall:
             12
@@ -196,13 +145,13 @@ public struct FolderView<Content: View>: View{
             120
         case .accessibility5:
             140
-
+            
         @unknown default:
             fatalError()
         }
-    
         
-//        reeturn 0
+        
+        //        reeturn 0
     }
     
 }
@@ -223,83 +172,31 @@ struct testeFolder: View {
         
         ZStack {
             
+            
+            
+            FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
+                Text("oi")
                 
-            
-                FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
-                    Text("oi")
-                    ScrollView {
-                        VStack {
-                            HStack {
-                                
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                
-                            }
-                            .padding()
-                            HStack {
-                                
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                
-                            }
-                            .padding()
-                            HStack {
-                                
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                
-                            }
-                            .padding()
-                            HStack {
-                                
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                Rectangle()
-                                    .aspectRatio(150/208, contentMode: .fit)
-                                
-                            }
-                            .padding()
-                        }
-
-                    }
-
+            }
+            .matchedGeometryEffect(id: "have", in: namespace)
+            //                    .transition(.scale(1))
+            .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
+            .onTapGesture {
+                
+                var transaction = Transaction(animation: .bouncy)
+                
+                transaction.disablesAnimations = true
+                
+                withTransaction(transaction) {
+                    haveFolderIsClicked.toggle()
                 }
-                    .matchedGeometryEffect(id: "have", in: namespace)
-//                    .transition(.scale(1))
-                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
-                    .onTapGesture {
-                        
-                        var transaction = Transaction(animation: .bouncy)
-                        
-                        transaction.disablesAnimations = true
-                        
-                        withTransaction(transaction) {
-                            haveFolderIsClicked.toggle()
-                        }
-                        
-//                        withAnimation(.bouncy) {
-//                            haveFolderIsClicked.toggle()
-//                        }
-                    }
-            
-
+            }
         }
-        
-        
-        
-        
     }
-    
 }
 
 #Preview {
     testeFolder()
-
+    
 }
 
