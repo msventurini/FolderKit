@@ -18,7 +18,7 @@ import SwiftUI
 import SwiftUI
 
 public struct RefactoredFolderView<Content: View>: View{
-
+    
     let text: String?
     let color: Color
     let shadow: Color
@@ -56,19 +56,31 @@ public struct RefactoredFolderView<Content: View>: View{
                     .transition(.identity)
             }
         }
+        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
+
         .ignoresSafeArea()
-
-        Folder(topSizeModifier: 0)
-            .fill(color ?? .cyan)
-            .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-            .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-            .frame(maxHeight: (isClicked ? 0 : .infinity))
-            .visualEffect { content, geometryProxy in
-                content
-                    .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+        .overlay {
+            VStack {
                 
+                if isClicked {
+                    Spacer()
+                }
+                
+                Folder(topSizeModifier: 0)
+                    .fill(color ?? .cyan)
+                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                    .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+                    .frame(maxHeight: (isClicked ? 0 : .infinity))
+                    .visualEffect { content, geometryProxy in
+                        content
+                            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+                        
+                    }
             }
-
+            
+        }
+        
+        
             .onChange(of: isClicked) { oldValue, newValue in
                 withAnimation(.linear) {
                     if newValue == true && animationOnProgress == true {
@@ -78,7 +90,9 @@ public struct RefactoredFolderView<Content: View>: View{
                     }
                 }
             }
+        
     }
+
     
 }
 
@@ -118,6 +132,8 @@ struct testeFolder2: View {
                 }
             }
         }
+        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262, maxHeight: .infinity, alignment: .center)
+
     }
 }
 
