@@ -54,45 +54,45 @@ public struct FolderView<Content: View>: View{
                 }
             }
             
-            .overlay(alignment: .bottom) {
-                ZStack {
-                    Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
-                        .fill(color ?? .cyan)
-                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                }
+            
+            ZStack {
+                Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
+                    .fill(color ?? .cyan)
+                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+            }
+            
+            .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+            .padding([.top, .leading], (isClicked ? 8 : 0))
+            .overlay {
                 
-                .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                .padding([.top, .leading], (isClicked ? 8 : 0))
-                .overlay {
-                    
-                    if let labelText = text {
-                        VStack {
-                            HStack {
-                                Spacer()
-                                
-                                Text(labelText)
-                                    .font(.title3)
-                                    .padding(.vertical, 5)
-                                    .padding(.horizontal, 8)
-                                
-                                
-                                    .background {
-                                        CustomRoundedRectangleFolderLabel(color: .white)
-                                    }
-                                    .padding(.horizontal,24)
-                                    .padding(.vertical, 16)
-                                
-                            }
+                if let labelText = text {
+                    VStack {
+                        HStack {
                             Spacer()
                             
+                            Text(labelText)
+                                .font(.title3)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 8)
+                            
+                            
+                                .background {
+                                    CustomRoundedRectangleFolderLabel(color: .white)
+                                }
+                                .padding(.horizontal,24)
+                                .padding(.vertical, 16)
+                            
                         }
+                        Spacer()
                         
-                        .transition(.opacity)
                     }
+                    
+                    .transition(.opacity)
                 }
-                .frame(maxHeight: (isClicked ? 0 : .infinity))
-                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
             }
+            .frame(maxHeight: (isClicked ? 0 : .infinity))
+            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+            
         }
         .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
         .onChange(of: animationOnProgress) { oldValue, newValue in
