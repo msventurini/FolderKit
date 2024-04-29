@@ -53,6 +53,7 @@ public struct RefactoredFolderView<Content: View>: View{
             
             if showItems {
                 content
+                    .padding(.top, 86)
                     .transition(.identity)
             }
         }
