@@ -7,29 +7,36 @@
 
 import SwiftUI
 
-public struct AnimatableFolder: InsettableShape {
+public struct FrontFolder: InsettableShape {
 
+    
+    
     var topSizeModifier: CGFloat
     var insetAmount: CGFloat
-    var identityInsetProportion: CGFloat
     
-    let identityInsetSize: CGFloat = 8
+    //Insets nos cantos da pasta
+    var leftInsetSize: CGFloat
+    var bottomInsetSize: CGFloat
+
+    //Rotação de abertura da pasta
+    var rotationValue: CGFloat
     
-    public var animatableData: Double {
-        get { identityInsetProportion }
-        set { identityInsetProportion = newValue }
-    }
+    //Bordas inferiores da pasta
+    var bottomCornerValuesProportion: CGFloat
+
+
     
-    public init() {
-        self.topSizeModifier = 0
-        self.insetAmount = 0
-        self.identityInsetProportion = 0
-    }
-    
-    public init(topSizeModifier: CGFloat = 0, insetAmount: CGFloat = 0, identityInsetProportion: CGFloat = 0) {
+    public init(topSizeModifier: CGFloat = 0, insetAmount: CGFloat = 0, leftInsetSize: CGFloat = 8, bottomInsetSize: CGFloat = 8, rotationValue: CGFloat = 0, bottomCornerValuesProportion: CGFloat = 0) {
         self.topSizeModifier = topSizeModifier
         self.insetAmount = insetAmount
-        self.identityInsetProportion = identityInsetProportion
+        
+        self.leftInsetSize = leftInsetSize
+        self.bottomInsetSize = bottomInsetSize
+        
+        self.rotationValue = rotationValue
+        
+        self.bottomCornerValuesProportion = bottomCornerValuesProportion
+        
 
     }
 
@@ -45,10 +52,10 @@ public struct AnimatableFolder: InsettableShape {
         let tabCornerRadius: CGFloat = 18 * (currentSize/referenceSize)
         let textWidth: CGFloat = 82
         
-        var currentInset: CGFloat = identityInsetSize * identityInsetProportion
         
-        let begin = CGPoint(x: rect.midX, y: rect.maxY - currentInset)
-        let end = CGPoint(x: rect.midX, y: rect.maxY - currentInset)
+        
+        let begin = CGPoint(x: rect.midX, y: rect.maxY - bottomInsetSize)
+        let end = CGPoint(x: rect.midX, y: rect.maxY - bottomInsetSize)
 
         
         
@@ -59,11 +66,11 @@ public struct AnimatableFolder: InsettableShape {
         downPath.addArc(
             center:
                 CGPoint(
-                    x: rect.minX + cornerRadius,
-                    y: rect.maxY - cornerRadius - currentInset
+                    x: rect.minX + (cornerRadius - (cornerRadius * (1 - bottomCornerValuesProportion))),
+                    y: rect.maxY - (cornerRadius - (cornerRadius * (1 - bottomCornerValuesProportion))) - bottomInsetSize
                 ),
             radius:
-                cornerRadius,
+                cornerRadius - (cornerRadius * (1 - bottomCornerValuesProportion)),
             startAngle:
                 Angle(degrees: 90),
             endAngle:
@@ -106,18 +113,27 @@ public struct AnimatableFolder: InsettableShape {
             clockwise: false
         )
 
-        downPath.addArc(center: CGPoint(x: rect.maxX - cornerRadius - (currentInset), y: rect.minY + cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 0), clockwise: false)
+        downPath.addArc(
+            center:
+                CGPoint(
+                    x: rect.maxX - cornerRadius - leftInsetSize,
+                    y: rect.minY + cornerRadius),
+            radius: cornerRadius,
+            startAngle: Angle(degrees: 270),
+            endAngle: Angle(degrees: 0),
+            clockwise: false
+        )
         
         downPath.addArc(
             center:
                 CGPoint(
                     x:
-                        rect.maxX - cornerRadius - currentInset,
+                        rect.maxX - (cornerRadius - (cornerRadius * (1 - bottomCornerValuesProportion))) - leftInsetSize,
                     y:
-                        rect.maxY - cornerRadius - currentInset
+                        rect.maxY - (cornerRadius - (cornerRadius * (1 - bottomCornerValuesProportion))) - bottomInsetSize
                 ),
             radius:
-                cornerRadius,
+                cornerRadius - (cornerRadius * (1 - bottomCornerValuesProportion)),
             startAngle:
                 Angle(degrees: 0),
             endAngle:
@@ -131,11 +147,9 @@ public struct AnimatableFolder: InsettableShape {
 
         var path3 = Path()
         
-        path3.addPath(downPath)
+        path3.addPath(downPath, transform: CGAffineTransformConcat(.init(scaleX: 1, y: rotationValue), .init(translationX: 0, y: rect.size.height * (1 - rotationValue))))
         
-//        path3.intersection(topPath)
-//        path3.addPath(topPath)
-        
+//
         return path3
         
     }
@@ -151,28 +165,53 @@ public struct AnimatableFolder: InsettableShape {
 
 struct TestingShapes: View {
     
-    @State var frontFolderTabSizeDecrease: CGFloat = 0
+//    @State var frontFolderTabSizeDecrease: CGFloat = 0
+    @State var isTapped: Bool = false
+    struct AnimationValues {
+        var frontFolderLeftInsetSize: CGFloat = 8
+        var frontFolderBottomInsetSize: CGFloat = 8
+        
+        var frontFolderRotationValue: CGFloat = 1
+        var bottomCornerValuesProportion: CGFloat = 1
+    }
     
     var body: some View {
         
-        AnimatableFolder(identityInsetProportion: frontFolderTabSizeDecrease)
-            .fill(.pink)
-            .stroke(.black, lineWidth: 3)
-            .frame(width: 350, height: 262)
-            .background(.blue)
+        KeyframeAnimator(initialValue: AnimationValues(), trigger: isTapped) { value in
+            
+            FrontFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion)
+                        .fill(.pink)
+                        .stroke(.black, lineWidth: 3)
+                        .frame(width: 350, height: 262)
+                        .background(.blue)
+        } keyframes: { value in
+            KeyframeTrack(\.frontFolderLeftInsetSize) {
+                CubicKeyframe(8, duration: 0.5)
+                CubicKeyframe(4, duration: 0.3)
+                CubicKeyframe(0, duration: 0.2)
+            }
+            
+            KeyframeTrack(\.frontFolderBottomInsetSize) {
+                CubicKeyframe(8, duration: 0.5)
+                CubicKeyframe(4, duration: 0.3)
+                CubicKeyframe(0, duration: 0.2)
+            }
+            KeyframeTrack(\.frontFolderRotationValue) {
+                CubicKeyframe(1, duration: 0.5)
+                CubicKeyframe(0.0, duration: 0.3)
+                CubicKeyframe(-1, duration: 0.2)
+            }
+            
+            KeyframeTrack(\.bottomCornerValuesProportion) {
+                CubicKeyframe(1, duration: 0.5)
+                CubicKeyframe(0.5, duration: 0.3)
+                CubicKeyframe(0, duration: 0.2)
+            }
+        }
+
             .onTapGesture {
-                
-                if frontFolderTabSizeDecrease == 0 {
-                    withAnimation(.bouncy(extraBounce: -0.1)) {
-                        frontFolderTabSizeDecrease = 1
-                    }
-                } else {
-                    withAnimation(.bouncy(extraBounce: -0.1)) {
-                        frontFolderTabSizeDecrease = 0
-                    }
-                }
-                
-                
+
+                        isTapped.toggle()
             }
             
         
