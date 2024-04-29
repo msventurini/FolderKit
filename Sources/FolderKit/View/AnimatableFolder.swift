@@ -27,6 +27,8 @@ public struct FrontFolder: InsettableShape {
     //Muda tamanho e posição da pasta para manter dentro do frame (tentar separar)
     var topFolderSizeDecrease: CGFloat
 
+    var frontFolderTabSizeDecrease: CGFloat
+
 
     
     public init(
@@ -36,7 +38,8 @@ public struct FrontFolder: InsettableShape {
         bottomInsetSize: CGFloat = 8,
         rotationValue: CGFloat = 0,
         bottomCornerValuesProportion: CGFloat = 0,
-        topFolderSizeDecrease: CGFloat = 0) {
+        topFolderSizeDecrease: CGFloat = 0,
+        frontFolderTabSizeDecrease: CGFloat = 0) {
             
         self.topSizeModifier = topSizeModifier
         self.insetAmount = insetAmount
@@ -50,6 +53,8 @@ public struct FrontFolder: InsettableShape {
             
         self.topFolderSizeDecrease = topFolderSizeDecrease
 
+            self.frontFolderTabSizeDecrease = frontFolderTabSizeDecrease
+            
     }
 
 //    deixa a pasta traseira no topo superior
@@ -95,7 +100,7 @@ public struct FrontFolder: InsettableShape {
             center:
                 CGPoint(
                     x: rect.minX + cornerRadius,
-                    y: rect.minY + cornerRadius * 3
+                    y: rect.minY + cornerRadius * (3 - (2 * frontFolderTabSizeDecrease))
                 ),
             radius: cornerRadius,
             startAngle: Angle(degrees: 180),
@@ -106,21 +111,21 @@ public struct FrontFolder: InsettableShape {
         downPath.addArc(
             center:
                 CGPoint(
-                    x: rect.maxX - cornerRadius * (3) - textWidth,
-                    y: rect.minY + (tabCornerRadius*(3/2))),
-            radius: tabCornerRadius,
+                    x: rect.maxX - cornerRadius * (3 + frontFolderTabSizeDecrease * 2) - textWidth,
+                    y: rect.minY + (tabCornerRadius*(3/2 * (1 - frontFolderTabSizeDecrease)))),
+            radius: tabCornerRadius * (1 - frontFolderTabSizeDecrease),
             startAngle: Angle(degrees: 90),
-            endAngle: Angle(degrees: 45),
+            endAngle: Angle(degrees: 45 + (45 * frontFolderTabSizeDecrease)),
             clockwise: true
         )
         
         downPath.addArc(
             center:
                 CGPoint(
-                    x: rect.maxX - cornerRadius - textWidth,
-                    y: rect.minY + tabCornerRadius),
-            radius: tabCornerRadius,
-            startAngle: Angle(degrees: 225),
+                    x: rect.maxX - (cornerRadius * (1 - frontFolderTabSizeDecrease)) - (textWidth * (1 - frontFolderTabSizeDecrease*0.5)),
+                    y: rect.minY + tabCornerRadius * (1 - frontFolderTabSizeDecrease)),            
+            radius: tabCornerRadius * (1 - frontFolderTabSizeDecrease),
+            startAngle: Angle(degrees: 225 + (45 * frontFolderTabSizeDecrease)),
             endAngle: Angle(degrees: 270),
             clockwise: false
         )
@@ -158,13 +163,11 @@ public struct FrontFolder: InsettableShape {
 
         var path3 = Path()
         
-        path3.addPath(downPath, transform: CGAffineTransformConcat(.init(scaleX: 1, y: rotationValue), .init(translationX: 0, y: rect.size.height * (1 - rotationValue))))
-//        path3.addPath(downPath)
+        path3.addPath(downPath, transform: CGAffineTransformConcat(.init(scaleX: 1, y: rotationValue), .init(translationX: 0, y: rect.size.height * (1-(rotationValue + 1)*0.5))))
         
-        // valor inicial correto:
-        // rect.size.height * (1 - rotationValue)
-        // valor final desejado:
-        // rect.size.height * (-rotationValue)
+        //valor inicial = 0
+        //valor final = 1
+
         
         return path3
         
@@ -192,13 +195,16 @@ struct TestingShapes: View {
         var bottomCornerValuesProportion: CGFloat = 1
         
         var topFolderSizeDecrease: CGFloat = 0
+        
+        var frontFolderTabSizeDecrease: CGFloat = 0
+
     }
     
     var body: some View {
         
         KeyframeAnimator(initialValue: AnimationValues(), trigger: isTapped) { value in
             
-            FrontFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease)
+            FrontFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease, frontFolderTabSizeDecrease: value.frontFolderTabSizeDecrease)
                         .fill(.pink)
                         .stroke(.black, lineWidth: 3)
                         .frame(width: 350, height: 262)
@@ -237,6 +243,12 @@ struct TestingShapes: View {
                 CubicKeyframe(0, duration: 0.5)
                 CubicKeyframe(0.25, duration: 0.3)
                 CubicKeyframe(0.5, duration: 0.2)
+            }
+            
+            KeyframeTrack(\.frontFolderTabSizeDecrease) {
+                CubicKeyframe(0, duration: 0.5)
+                CubicKeyframe(0.5, duration: 0.3)
+                CubicKeyframe(1, duration: 0.2)
             }
             
         }
