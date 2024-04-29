@@ -9,7 +9,11 @@ import SwiftUI
 
 public struct AnimatableFolder: InsettableShape {
 
-    
+    enum FolderPiecePosition {
+        case front
+        case back
+    }
+    //faltam os insets da pasta transeira
     
     var topSizeModifier: CGFloat
     var insetAmount: CGFloat
@@ -31,16 +35,23 @@ public struct AnimatableFolder: InsettableShape {
 
     var frontFolderDivisionDecrease: CGFloat
     
+    
+    var frontFolderTranslationRatio: CGFloat
+    
+    
+    
+    
     public init(
         topSizeModifier: CGFloat = 0,
         insetAmount: CGFloat = 0,
-        leftInsetSize: CGFloat = 8,
-        bottomInsetSize: CGFloat = 8,
-        rotationValue: CGFloat = 0,
-        bottomCornerValuesProportion: CGFloat = 0,
+        leftInsetSize: CGFloat = 0,
+        bottomInsetSize: CGFloat = 0,
+        rotationValue: CGFloat = 1,
+        bottomCornerValuesProportion: CGFloat = 1,
         topFolderSizeDecrease: CGFloat = 0,
         frontFolderTabSizeDecrease: CGFloat = 0,
-        frontFolderDivisionDecrease: CGFloat = 0
+        frontFolderDivisionDecrease: CGFloat = 0,
+        frontFolderTranslationRatio: CGFloat = 0
     ) {
             
         self.topSizeModifier = topSizeModifier
@@ -58,6 +69,8 @@ public struct AnimatableFolder: InsettableShape {
         self.frontFolderTabSizeDecrease = frontFolderTabSizeDecrease
         
         self.frontFolderDivisionDecrease = frontFolderDivisionDecrease
+        
+        self.frontFolderTranslationRatio = frontFolderTranslationRatio
     }
 
 //    deixa a pasta traseira no topo superior
@@ -167,7 +180,7 @@ public struct AnimatableFolder: InsettableShape {
 
         var path3 = Path()
         
-        path3.addPath(downPath, transform: CGAffineTransformConcat(.init(scaleX: 1, y: rotationValue), .init(translationX: 0, y: rect.size.height * (1-(rotationValue + 1)*0.5))))
+        path3.addPath(downPath, transform: CGAffineTransformConcat(.init(scaleX: 1, y: rotationValue), .init(translationX: 0, y: rect.size.height * frontFolderTranslationRatio)))
         
         //valor inicial = 0
         //valor final = 1
@@ -190,6 +203,8 @@ struct TestingShapes: View {
     
 //    @State var frontFolderTabSizeDecrease: CGFloat = 0
     @State var isTapped: Bool = false
+    @State var isExpanded: Bool = false
+    
     struct AnimationValues {
         var frontFolderLeftInsetSize: CGFloat = 8
         var frontFolderBottomInsetSize: CGFloat = 8
@@ -203,72 +218,110 @@ struct TestingShapes: View {
         var frontFolderTabSizeDecrease: CGFloat = 0
 
         var frontFolderDivisionDecrease: CGFloat = 0
-
+        
+        var frontFolderTranslationRatio: CGFloat = 0
+        
+        var maxFrameSizeX: CGFloat = 350
         
     }
     
     var body: some View {
         
         KeyframeAnimator(initialValue: AnimationValues(), trigger: isTapped) { value in
+    
+            ZStack {
+                AnimatableFolder(bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease, frontFolderDivisionDecrease: value.frontFolderDivisionDecrease)
+                    .fill(.pink)
+                    .stroke(.black, lineWidth: 3)
+                
+                AnimatableFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease, frontFolderTabSizeDecrease: value.frontFolderTabSizeDecrease, frontFolderDivisionDecrease: value.frontFolderDivisionDecrease, frontFolderTranslationRatio: value.frontFolderTranslationRatio)
+                    .fill(.pink)
+                    .stroke(.black, lineWidth: 3)
+            }
             
-            AnimatableFolder(leftInsetSize: value.frontFolderLeftInsetSize, bottomInsetSize: value.frontFolderBottomInsetSize, rotationValue: value.frontFolderRotationValue, bottomCornerValuesProportion: value.bottomCornerValuesProportion, topFolderSizeDecrease: value.topFolderSizeDecrease, frontFolderTabSizeDecrease: value.frontFolderTabSizeDecrease, frontFolderDivisionDecrease: value.frontFolderDivisionDecrease)
-//                        .fill(.pink)
-                        .stroke(.black, lineWidth: 3)
-                        .frame(width: 350, height: 262)
+            
+
+                        
                         .background(.blue)
+                        .frame(maxWidth: isExpanded ? .infinity : 350, maxHeight: isExpanded ? .infinity : 262)
+
         } keyframes: { value in
             KeyframeTrack(\.frontFolderLeftInsetSize) {
                 CubicKeyframe(8, duration: 0.5)
-                CubicKeyframe(4, duration: 0.3)
-                CubicKeyframe(0, duration: 0.2)
+                CubicKeyframe(4, duration: 0.5)
+                CubicKeyframe(0, duration: 0.5)
             }
-            
+//            
             KeyframeTrack(\.frontFolderBottomInsetSize) {
                 CubicKeyframe(8, duration: 0.5)
-                CubicKeyframe(4, duration: 0.3)
-                CubicKeyframe(0, duration: 0.2)
+                CubicKeyframe(4, duration: 0.5)
+                CubicKeyframe(0, duration: 0.5)
             }
             KeyframeTrack(\.frontFolderRotationValue) {
                 CubicKeyframe(1, duration: 0.5)
-                CubicKeyframe(0.0, duration: 0.3)
-                CubicKeyframe(-1, duration: 0.2)
+                CubicKeyframe(0.5, duration: 0.5)
+                CubicKeyframe(0.0, duration: 0.5)
+                CubicKeyframe(-0.5, duration: 0.5)
+                CubicKeyframe(-1, duration: 0.5)
             }
-            
+//            
             KeyframeTrack(\.bottomCornerValuesProportion) {
                 CubicKeyframe(1, duration: 0.5)
-                CubicKeyframe(0.5, duration: 0.3)
-                CubicKeyframe(0, duration: 0.2)
-            }
-            
-            KeyframeTrack(\.bottomCornerValuesProportion) {
-                CubicKeyframe(1, duration: 0.5)
-                CubicKeyframe(0.5, duration: 0.3)
-                CubicKeyframe(0, duration: 0.2)
-            }
-            
-            KeyframeTrack(\.topFolderSizeDecrease) {
+                CubicKeyframe(0.5, duration: 0.5)
                 CubicKeyframe(0, duration: 0.5)
-                CubicKeyframe(0.25, duration: 0.3)
-                CubicKeyframe(0.5, duration: 0.2)
             }
-            
+//            
+//            KeyframeTrack(\.bottomCornerValuesProportion) {
+//                CubicKeyframe(1, duration: 0.5)
+//                CubicKeyframe(0.5, duration: 0.3)
+//                CubicKeyframe(0, duration: 0.2)
+//            }
+//            
+//            KeyframeTrack(\.topFolderSizeDecrease) {
+//                CubicKeyframe(0, duration: 0.5)
+//                CubicKeyframe(0.25, duration: 0.3)
+//                CubicKeyframe(0.5, duration: 0.2)
+//            }
+//            
             KeyframeTrack(\.frontFolderTabSizeDecrease) {
-                CubicKeyframe(0, duration: 0.5)
-                CubicKeyframe(0.5, duration: 0.3)
-                CubicKeyframe(1, duration: 0.2)
+                CubicKeyframe(0, duration: 0.75)
+                CubicKeyframe(0.25, duration: 0.75)
+                CubicKeyframe(0.5, duration: 0.25)
+                CubicKeyframe(0.75, duration: 0.15)
+                CubicKeyframe(1, duration: 0.05)
             }
             
             KeyframeTrack(\.frontFolderDivisionDecrease) {
-                CubicKeyframe(0, duration: 0.5)
+                LinearKeyframe(0, duration: 1.5)
                 CubicKeyframe(0.5, duration: 0.3)
                 CubicKeyframe(1, duration: 0.2)
             }
             
+            KeyframeTrack(\.frontFolderTranslationRatio) {
+                CubicKeyframe(0, duration: 0.5)
+                CubicKeyframe(0.5, duration: 0.5)
+                CubicKeyframe(1, duration: 0.5)
+                CubicKeyframe(1.5, duration: 0.5)
+                CubicKeyframe(2, duration: 0.5)
+            }
+
+            
         }
+//        .frame(maxWidth: isExpanded ? .infinity : 350, maxHeight: isExpanded ? .infinity : 262)
+
 
             .onTapGesture {
 
                         isTapped.toggle()
+            }
+            .onChange(of: isTapped) { oldValue, newValue in
+//                withAnimation {
+//                    if newValue == true {
+//                        isExpanded = true
+//                    } else {
+//                        isExpanded = false
+//                    }
+//                }
             }
             
         
