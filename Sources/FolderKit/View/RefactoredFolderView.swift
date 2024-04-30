@@ -17,7 +17,7 @@ import SwiftUI
 
 import SwiftUI
 
-public struct RefactoredFolderView<Content: View>: View{
+public struct RefactoredFolderView<Content: View, Header: View>: View{
     
     let text: String?
     let color: Color
@@ -31,8 +31,9 @@ public struct RefactoredFolderView<Content: View>: View{
     @Environment(\.dynamicTypeSize) private var sizeCategory
     
     let content: Content
+    let header: Header
     
-    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
+    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content, @ViewBuilder header: () -> Header) {
         self.text = text
         self.color = color
         self.shadow = shadow
@@ -41,6 +42,7 @@ public struct RefactoredFolderView<Content: View>: View{
         self._isClicked = isClicked
         self._animationOnProgress = animationOnProgress
         self.content = content()
+        self.header = header()
     }
     
     public var body: some View {
@@ -58,10 +60,19 @@ public struct RefactoredFolderView<Content: View>: View{
             VStack {
                 
                 if isClicked {
-                    content
-                        .padding(.top, 80)
+
+                    VStack {
+                        
+                        header
+                        content
+                            .padding(.top, 28)
+                        Spacer()
+                        
+                    }
+                    .padding(.top, 80)
+
                         .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
-                    Spacer()
+
                 }
                 
                 Folder(topSizeModifier: 0)
@@ -75,6 +86,7 @@ public struct RefactoredFolderView<Content: View>: View{
                         
                     }
             }
+
             
         }
         
@@ -110,12 +122,17 @@ struct testeFolder2: View {
         
         ZStack {
             
-            
-            
             RefactoredFolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
-                Text("oi")
-                
+                Text("body")
+            } header: {
+                Text("header")
             }
+//
+//            
+//            RefactoredFolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
+//                Text("oi")
+//                
+//            }
             .matchedGeometryEffect(id: "have", in: namespace)
             //                    .transition(.scale(1))
             .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
