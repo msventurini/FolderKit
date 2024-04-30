@@ -59,7 +59,7 @@ public struct RefactoredFolderView<Content: View>: View{
                 
                 if isClicked {
                     content
-                        .padding(.top, 86)
+                        .padding(.top, 80)
                         .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
                     Spacer()
                 }
