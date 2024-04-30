@@ -65,12 +65,24 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                         VStack {
                             
                             header
-                            content
+                            
+                            VStack {
+                                content
+
+                            }   
+//                            .transition(.identity)
+//
+
+                            
+                            
 
                         }
-                        .transition(.move(edge: .bottom).combined(with: .scale(2)))
                         .padding(.top, 76)
                         .padding()
+                        .transition(.move(edge: .bottom).combined(with: .scale(1)))
+
+//                        .transition(.identity)
+
 
                     }
                     
@@ -79,6 +91,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                 .ignoresSafeArea()
                 .mask(alignment: .center) {
                     Rectangle()
+                        .frame(width: 500)
                 }
    
             }
