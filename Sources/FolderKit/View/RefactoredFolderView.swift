@@ -79,7 +79,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                         }
                         .padding(.top, 76)
                         .padding()
-                        .transition(.move(edge: .bottom).combined(with: .scale(1)))
+                        .transition(.move(edge: .bottom))
 
 //                        .transition(.identity)
 
@@ -91,7 +91,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                 .ignoresSafeArea()
                 .mask(alignment: .center) {
                     Rectangle()
-                        .frame(width: 500)
+                        .frame(minWidth: 350, idealWidth: 350, maxWidth: .infinity)
                 }
    
             }
