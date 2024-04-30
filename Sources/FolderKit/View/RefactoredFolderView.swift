@@ -59,41 +59,56 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
         .overlay {
             ZStack {
                 
-                ZStack {
+                GroupBox {
                     if isClicked {
-                        
-                        VStack {
+                        content
+                            .transition(.move(edge: .bottom))
                             
-                            header
-                            
-                            VStack {
-                                content
-
-                            }   
-//                            .transition(.identity)
-//
-
-                            
-                            
-
-                        }
-                        .padding(.top, 76)
-                        .padding()
-                        .transition(.move(edge: .bottom))
-
-//                        .transition(.identity)
-
-
                     }
                     
                     
+
+                } label: {
+                    header
                 }
+                .padding(.top, isClicked ? 76 : 0)
+                .padding()
+
+                
+//                ZStack {
+//                    if isClicked {
+//                        
+//                        VStack {
+//                            
+//                            
+//                            
+//                            VStack {
+//                                
+//
+//                            }   
+////                            .transition(.identity)
+////
+//
+//                            
+//                            
+//
+//                        }
+//                        
+//
+////                        .transition(.identity)
+//
+//
+//                    }
+//                    
+//                    
+//                }
                 .ignoresSafeArea()
-                .mask(alignment: .center) {
-                    Rectangle()
-                        .frame(minWidth: 350, idealWidth: 350, maxWidth: .infinity)
-                }
+                
    
+            }
+            .mask(alignment: .center) {
+                Rectangle()
+                    .frame(minWidth: 350, idealWidth: 350, maxWidth: .infinity)
             }
             
             VStack {
