@@ -66,12 +66,9 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                             
                             header
                             content
-                            //                            .padding(.top, 28)
-//                            Spacer()
-                            
+
                         }
-//                        .transition(.scale(scale: 1, anchor: .bottom))
-                        .transition(.move(edge: .bottom))
+                        .transition(.move(edge: .bottom).combined(with: .scale(2)))
                         .padding(.top, 76)
                         .padding()
 
@@ -80,33 +77,32 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                     
                 }
                 .ignoresSafeArea()
-
                 .mask(alignment: .center) {
                     Rectangle()
-//
-                        
-                        .ignoresSafeArea()
                 }
-                
-
-//                        .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
-//                    .transition(.identity)
-                        
-
-//                }
-                
-                Folder(topSizeModifier: 0)
-                    .fill(color ?? .cyan)
-                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                    .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                    .frame(maxHeight: (isClicked ? 0 : .infinity))
-                    .visualEffect { content, geometryProxy in
-                        content
-                            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
-                        
-                    }
-                    
+   
             }
+            
+            VStack {
+                Spacer()
+                //            if !isClicked {
+                                Folder(topSizeModifier: 0)
+                                    .fill(color ?? .cyan)
+                                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                //                    .transition(.asymmetric(insertion: .slide.combined(with: .move(edge: .bottom)), removal: .slide.combined(with: .move(edge: .bottom))))
+                //                    .transition(rotation3DTransition())
+                                    .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+                                    .frame(maxHeight: (isClicked ? 0 : .infinity))
+                                    
+                                        .visualEffect { content, geometryProxy in
+                                            content
+                                                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+
+                                        }
+                //            }
+            }
+            
+            
 
             
         }
@@ -195,3 +191,22 @@ struct testeFolder2: View {
     testeFolder2()
     
 }
+
+
+struct rotation3DTransition: Transition {
+    
+    
+    
+    func body(content: Content, phase: TransitionPhase) -> some View {
+        
+        
+        
+        content
+
+            .rotation3DEffect(Angle(degrees: phase.value * 90), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: -1)
+                
+
+    }
+    
+}
+
