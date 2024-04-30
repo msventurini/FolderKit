@@ -65,11 +65,13 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                         
                         header
                         content
-                            .padding(.top, 28)
+//                            .padding(.top, 28)
                         Spacer()
                         
                     }
-                    .padding(.top, 80)
+//                    .padding(.top, 80)
+                    .padding(.top, 76)
+                    .padding()
 
                         .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
 
