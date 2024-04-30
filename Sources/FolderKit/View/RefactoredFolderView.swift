@@ -57,25 +57,43 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
 
         .ignoresSafeArea()
         .overlay {
-            VStack {
+            ZStack {
                 
-                if isClicked {
+                ZStack {
+                    if isClicked {
+                        
+                        VStack {
+                            
+                            header
+                            content
+                            //                            .padding(.top, 28)
+//                            Spacer()
+                            
+                        }
+//                        .transition(.scale(scale: 1, anchor: .bottom))
+                        .transition(.move(edge: .bottom))
+                        .padding(.top, 76)
+                        .padding()
 
-                    VStack {
-                        
-                        header
-                        content
-//                            .padding(.top, 28)
-                        Spacer()
-                        
                     }
-//                    .padding(.top, 80)
-                    .padding(.top, 76)
-                    .padding()
-
-                        .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
-
+                    
+                    
                 }
+                .ignoresSafeArea()
+
+                .mask(alignment: .center) {
+                    Rectangle()
+//
+                        
+                        .ignoresSafeArea()
+                }
+                
+
+//                        .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
+//                    .transition(.identity)
+                        
+
+//                }
                 
                 Folder(topSizeModifier: 0)
                     .fill(color ?? .cyan)
@@ -87,6 +105,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                             .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
                         
                     }
+                    
             }
 
             
@@ -120,36 +139,54 @@ struct testeFolder2: View {
     
     @State var buttonIsTapped: Bool = false
     
+    let columns = [
+        GridItem(spacing: 8),
+        GridItem(spacing: 8)
+    ]
+    
     var body: some View {
         
         ZStack {
             
-            RefactoredFolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
-                Text("body")
-            } header: {
-                Text("header")
-            }
-//
-//            
-//            RefactoredFolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
-//                Text("oi")
-//                
-//            }
-            .matchedGeometryEffect(id: "have", in: namespace)
-            //                    .transition(.scale(1))
-            .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
-            .onTapGesture {
                 
-                var transaction = Transaction(animation: .bouncy)
-                
-                transaction.disablesAnimations = true
-                
-                withTransaction(transaction) {
-                    haveFolderIsClicked.toggle()
+                RefactoredFolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 22) {
+    //                        Text("body")
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+                            Rectangle()
+                                .frame(width: 156,height: 212)
+
+                        }
+                    }
+                    
+                    
+                } header: {
+                    Text("header")
                 }
+            
+            .onTapGesture {
+                withAnimation(.interpolatingSpring(stiffness: 300, damping: 100).speed(0.7)) {
+                    haveFolderIsClicked.toggle()
+
+                }
+
             }
         }
-        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
+
+//        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262, maxHeight: .infinity, alignment: .center)
 
     }
 }
