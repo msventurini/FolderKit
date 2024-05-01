@@ -47,77 +47,77 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
     
     public var body: some View {
         
-        ZStack {
-            Folder(topSizeModifier: 0)
-                .fill(shadow ?? .blue)
-                .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                .padding([.top, .leading], isClicked ? 0 : 8)
-        }
-        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
         
-        .ignoresSafeArea()
-        .overlay {
-            ZStack {
-                
-                GroupBox {
-                    if isClicked {
-                        content
-                            .transition(.move(edge: .bottom))
+        Folder(topSizeModifier: 0)
+            .fill(shadow ?? .blue)
+            .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+            .padding([.top, .leading], isClicked ? 0 : 16)
+
+            .ignoresSafeArea()
+            .overlay {
+                ZStack {
+                    
+                    GroupBox {
+                        if isClicked {
+                            content
+                                .transition(.move(edge: .bottom))
+                            
+                        }
                         
-                    }
-                    
-                    
-                    
-                } label: {
-                    header
-                        .padding(.bottom)
-                }
-                .groupBoxStyle(TesteGroupBox(folderIsOpen: $isClicked))
-                .padding(.top, isClicked ? 76 : 0)
-                .padding()
-                
-                
-                .ignoresSafeArea()
-                
-                
-            }
-            .mask(alignment: .center) {
-                Rectangle()
-                    .frame(minWidth: 350, idealWidth: 350, maxWidth: .infinity)
-            }
-            
-            VStack {
-                Spacer()
-                
-                Folder(topSizeModifier: 0)
-                    .fill(color ?? .cyan)
-                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                    .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                    .frame(maxHeight: (isClicked ? 0 : .infinity))
-                
-                    .visualEffect { content, geometryProxy in
-                        content
-                            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
                         
+                        
+                    } label: {
+                        header
+                            .padding(.bottom)
                     }
+                    .groupBoxStyle(TesteGroupBox(folderIsOpen: $isClicked))
+                    .padding(.top, isClicked ? 76 : 0)
+                    .padding()
+                    
+                    
+                    .ignoresSafeArea()
+                    
+                    
+                }
+                .mask(alignment: .center) {
+                    Rectangle()
+                        .frame(minWidth: 350, idealWidth: 350, maxWidth: .infinity)
+                }
+                
+                VStack {
+                    Spacer()
+                    
+                    Folder(topSizeModifier: 0)
+                        .fill(color ?? .cyan)
+                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                        .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+                        .frame(maxHeight: (isClicked ? 0 : .infinity))
+                    
+                        .visualEffect { content, geometryProxy in
+                            content
+                                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+                            
+                        }
+                    
+                }
+                
+                
+                
                 
             }
-            
-            
-            
-            
-        }
+            .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
         
         
-        .onChange(of: isClicked) { oldValue, newValue in
-            withAnimation(.linear) {
-                if newValue == true && animationOnProgress == true {
-                    showItems = true
-                } else {
-                    showItems = isClicked && !animationOnProgress
+        
+            .onChange(of: isClicked) { oldValue, newValue in
+                withAnimation(.linear) {
+                    if newValue == true && animationOnProgress == true {
+                        showItems = true
+                    } else {
+                        showItems = isClicked && !animationOnProgress
+                    }
                 }
             }
-        }
         
     }
     
