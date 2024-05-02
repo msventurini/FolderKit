@@ -49,7 +49,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
         
         
         Folder(topSizeModifier: 0)
-            .fill(shadow ?? .blue)
+            .fill(isClicked ? color : shadow)
             .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             .padding([.top, .leading], isClicked ? 0 : 16)
 
@@ -61,6 +61,15 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                         if isClicked {
                             content
                                 .transition(.move(edge: .bottom))
+                                .overlay {
+                                    VStack {
+                                        Rectangle()
+                                            .fill(LinearGradient(colors: [color, .clear], startPoint: .top, endPoint: .bottom))
+                                            .frame(height: 10)
+                                            .padding(.horizontal)
+                                        Spacer()
+                                    }
+                                }
                             
                         }
                         
