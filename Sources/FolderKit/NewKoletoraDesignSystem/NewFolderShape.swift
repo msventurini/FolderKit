@@ -22,7 +22,7 @@ struct NewFolderShape: Shape {
             let currentSize: CGFloat = (rect.width)
     
             let cornerRadius: CGFloat = 8 * (currentSize/referenceWidth)
-            let tabCornerRadius: CGFloat = 8 * (currentSize/referenceWidth)
+            let tabCornerRadius: CGFloat = 6 * (currentSize/referenceWidth)
             
             let tabContentWidth: CGFloat = 22 * (currentSize/referenceWidth)
             
@@ -42,12 +42,12 @@ struct NewFolderShape: Shape {
 
             let topLeftArcCenter = CGPoint(
                 x: minX + cornerRadius,
-                y: minY + cornerRadius * 3
+                y: minY + cornerRadius * 2.85
             )
             
             let tabBottomArcCenter = CGPoint(
-                x: maxX - (cornerRadius * 3) - tabContentWidth,
-                y: minY + tabCornerRadius
+                x: maxX - (cornerRadius * 3) - tabContentWidth + 4,
+                y: minY + tabCornerRadius * 2
             )
             
             var path = Path()
@@ -64,7 +64,7 @@ struct NewFolderShape: Shape {
             
             path.addArc(
                 center: tabBottomArcCenter,
-                radius: tabCornerRadius,
+                radius: tabCornerRadius/2,
                 startAngle: Angle(degrees: 90),
                 endAngle: Angle(degrees: 35),
                 clockwise: true
@@ -72,7 +72,7 @@ struct NewFolderShape: Shape {
             
             path.addArc(
                 center: CGPoint(
-                    x: maxX - (tabCornerRadius * 0.75) - tabContentWidth,
+                    x: maxX - (tabCornerRadius) - tabContentWidth,
                     y: minY + tabCornerRadius),
                 radius: tabCornerRadius,
                 startAngle: Angle(degrees: 210),
