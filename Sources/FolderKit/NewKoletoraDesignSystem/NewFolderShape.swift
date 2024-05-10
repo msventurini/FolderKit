@@ -22,6 +22,9 @@ struct NewFolderShape: Shape {
             
             let begin = CGPoint(x: rect.minX, y: rect.maxY - cornerRadius)
 
+            
+            
+            
             var path = Path()
             path.move(to: begin)
             
