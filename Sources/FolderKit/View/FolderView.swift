@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct FolderView<Content: View>: View{
-//public struct FolderView: View {
+    //public struct FolderView: View {
     
     // Debugando, depois estes voltam
     let text: String?
@@ -25,7 +25,7 @@ public struct FolderView<Content: View>: View{
     
     
     let content: Content
-
+    
     public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, isClicked: Binding<Bool>, animationOnProgress: Binding<Bool>, topSizeModifier: Int = 50, @ViewBuilder content: () -> Content) {
         self.text = text
         self.color = color
@@ -44,121 +44,57 @@ public struct FolderView<Content: View>: View{
             ZStack {
                 Folder(topSizeModifier: 0)
                     .fill(shadow ?? .blue)
-                Folder(topSizeModifier: 0)
                     .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             }
             .padding([.top, .leading], isClicked ? 0 : 8)
             .overlay {
-                
-                VStack {
-                    
-//                    if isClicked {
-//                        HStack {
-//                            BackButton()
-//                                .onTapGesture {
-//                                    withAnimation(.smooth) {
-//                                        isClicked = false
-//                                        animationOnProgress = true
-//                                        
-//                                    } completion: {
-//                                        withAnimation(.smooth) {
-//                                            animationOnProgress = false
-//                                        }
-//                                        
-//                                        
-//                                    }
-//                                }
-//                            
-//                            Spacer()
-//                        }
-//                        .padding(.top, 60)
-//                        .padding(.horizontal, 16)
-//                        .transition(.asymmetric(insertion: .push(from: .bottom).combined(with: .opacity), removal: .push(from: .top).combined(with: .opacity)))
-//
-//                    }                    
-                    if showItems {
-                        content
-                    }
+                if showItems {
+                    content
+                        .transition(.identity)
                 }
             }
             
-            .overlay(alignment: .bottom) {
-                ZStack {
-                    Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
-                        .fill(color ?? .cyan)
-                    Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
-//                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-
-                }
+            
+            ZStack {
+                Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
+                    .fill(color ?? .cyan)
+                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+            }
+            
+            .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+            .padding([.top, .leading], (isClicked ? 8 : 0))
+            .overlay {
                 
-                .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                .padding([.top, .leading], (isClicked ? 8 : 0))
-                .overlay {
-                    
-                    if let labelText = text {
-                        VStack {
-                            HStack {
-                                Spacer()
-                                
-                                Text(labelText)
-                                    .font(.title3)
-                                    .padding(.vertical, 5)
-                                    .padding(.horizontal, 8)
-                                
-                                
-                                    .background {
-                                        CustomRoundedRectangleFolderLabel(color: .white)
-                                    }
-                                    .padding(.horizontal,24)
-                                    .padding(.vertical, 16)
-                                
-                            }
+                if let labelText = text {
+                    VStack {
+                        HStack {
                             Spacer()
                             
+                            Text(labelText)
+                                .font(.title3)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 8)
+                            
+                            
+                                .background {
+                                    CustomRoundedRectangleFolderLabel(color: .white)
+                                }
+                                .padding(.horizontal,24)
+                                .padding(.vertical, 16)
+                            
                         }
-
-                        .transition(.opacity)
+                        Spacer()
+                        
                     }
                     
-                    
-//                    .opacity(propertiesTextOpacity)
-                    
-                    
-                    
+                    .transition(.opacity)
                 }
-                .frame(maxHeight: (isClicked ? 0 : .infinity))
-                
-                
-                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
-                
-                
-//                .onTapGesture {
-//                    withAnimation(.interpolatingSpring) {
-//                        isClicked = true
-//                        animationOnProgress = true
-//                        
-//                    } completion: {
-//                        withAnimation(.smooth) {
-//                            animationOnProgress = false
-//                        }
-//                        
-//                        
-//                    }
-//                }
-                
-                
-                
-                
             }
-            
-            
+            .frame(maxHeight: (isClicked ? 0 : .infinity))
+            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
             
         }
         .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
-//        .frame(minWidth: 0, idealWidth: 350, maxWidth: isClicked ? .infinity : 350, minHeight: 0, idealHeight: 262, maxHeight: isClicked ? .infinity : 262)
-//        .ignoresSafeArea()
-
         .onChange(of: animationOnProgress) { oldValue, newValue in
             withAnimation {
                 
@@ -167,12 +103,7 @@ public struct FolderView<Content: View>: View{
                 } else {
                     showItems = isClicked && !animationOnProgress
                 }
-                
-                
-                
-                
             }
-            
         }
         .onChange(of: isClicked) { oldValue, newValue in
             withAnimation(.linear) {
@@ -181,19 +112,14 @@ public struct FolderView<Content: View>: View{
                 } else {
                     showItems = isClicked && !animationOnProgress
                 }
-                
             }
-            
         }
         .ignoresSafeArea()
-        
-        
-        
     }
     
     
     func getTopFolderSpacer(fontSize: DynamicTypeSize) -> Double {
-
+        
         switch fontSize {
         case .xSmall:
             12
@@ -219,13 +145,13 @@ public struct FolderView<Content: View>: View{
             120
         case .accessibility5:
             140
-
+            
         @unknown default:
             fatalError()
         }
-    
         
-//        reeturn 0
+        
+        //        reeturn 0
     }
     
 }
@@ -246,44 +172,31 @@ struct testeFolder: View {
         
         ZStack {
             
+            
+            
+            FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
+                Text("oi")
                 
-            
-                FolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
-                    Text("oi")
-
-                }
-                    .matchedGeometryEffect(id: "have", in: namespace)
-                    .transition(.scale(1))
-//                    .frame(minHeight: 270, idealHeight: 270, maxHeight: haveFolderIsClicked ? .infinity : 270)
-//                    .frame(width: 350, height: 262)
-//                    .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 262)
-//                    .padding(.top, haveFolderIsClicked ? 0 : 500)
-
-
-            
-            
-            
-            
-            Button {
-                withAnimation(.bouncy) {
-                    buttonIsTapped.toggle()
-                }
-            } label: {
-                Text("teste")
             }
-            
-
+            .matchedGeometryEffect(id: "have", in: namespace)
+            //                    .transition(.scale(1))
+            .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
+            .onTapGesture {
+                
+                var transaction = Transaction(animation: .bouncy)
+                
+                transaction.disablesAnimations = true
+                
+                withTransaction(transaction) {
+                    haveFolderIsClicked.toggle()
+                }
+            }
         }
-        
-        
-        
-        
     }
-    
 }
 
 #Preview {
     testeFolder()
-
+    
 }
 
