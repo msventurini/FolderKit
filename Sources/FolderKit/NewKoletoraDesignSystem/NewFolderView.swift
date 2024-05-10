@@ -42,80 +42,26 @@ public struct NewFolderView<Content: View>: View{
         ZStack {
             
             ZStack {
-                NewFolderShape()
+                NewFolderShape(topPadding: 8, rightPadding: 8)
+                //mudar essa cor pra um parametro
+                    .stroke(.black, lineWidth: 2)
                     .fill(shadow)
-//                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             
-                NewFolderShape()
-                    .fill(color)
-//                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                NewFolderShape(bottomPadding: 8, leftPadding: 8)
+                    .stroke(.black, lineWidth: 2)
+                    .fill(.green)
+
             }
             
             
             
-            .frame(maxHeight: (isClicked ? 0 : .infinity))
-            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+            
             
         }
-        .frame(minWidth: 109, idealWidth: 350, maxWidth: .infinity, minHeight: 99, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
-        .onChange(of: animationOnProgress) { oldValue, newValue in
-            withAnimation {
-                
-                if newValue == true && animationOnProgress == true {
-                    showItems = true
-                } else {
-                    showItems = isClicked && !animationOnProgress
-                }
-            }
-        }
-        .onChange(of: isClicked) { oldValue, newValue in
-            withAnimation(.linear) {
-                if newValue == true && animationOnProgress == true {
-                    showItems = true
-                } else {
-                    showItems = isClicked && !animationOnProgress
-                }
-            }
-        }
-        .ignoresSafeArea()
+  
     }
     
-    
-    func getTopFolderSpacer(fontSize: DynamicTypeSize) -> Double {
-        
-        switch fontSize {
-        case .xSmall:
-            12
-        case .small:
-            16
-        case .medium:
-            20
-        case .large:
-            22
-        case .xLarge:
-            30
-        case .xxLarge:
-            34
-        case .xxxLarge:
-            42
-        case .accessibility1:
-            60
-        case .accessibility2:
-            78
-        case .accessibility3:
-            98
-        case .accessibility4:
-            120
-        case .accessibility5:
-            140
-            
-        @unknown default:
-            fatalError()
-        }
-        
-        
-        //        reeturn 0
-    }
+
     
 }
 

@@ -57,7 +57,7 @@ struct NewFolderShape: Shape {
         
         
         var path = Path()
-        path.move(to: begin)
+//        path.move(to: begin)
         
         
         path.addArc(
@@ -113,6 +113,8 @@ struct NewFolderShape: Shape {
             endAngle: Angle(degrees: 180),
             clockwise: false
         )
+        
+        path.closeSubpath()
         
         
         return path
