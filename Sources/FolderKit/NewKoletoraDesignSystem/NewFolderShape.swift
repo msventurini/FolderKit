@@ -10,10 +10,10 @@ import SwiftUI
 struct NewFolderShape: Shape {
     
     
-    var topPadding: CGFloat = 20
-    var bottomPadding: CGFloat = 20
-    var rightPadding: CGFloat = 20
-    var leftPadding: CGFloat = 20
+    var topPadding: CGFloat = 0
+    var bottomPadding: CGFloat = 0
+    var rightPadding: CGFloat = 0
+    var leftPadding: CGFloat = 0
     
         func path(in rect: CGRect) -> Path {
             
@@ -179,13 +179,13 @@ struct testeNewShape: View {
             Folder(topSizeModifier: 0, insetAmount: 0)
                 .fill(.pink)
                 .opacity(0.2)
-            VStack {
-                Image(.newFolderIconRef)
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(0.2)
-                Spacer()
-            }
+//            VStack {
+//                Image(.newFolderIconRef)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .opacity(0.2)
+//                Spacer()
+//            }
             
 
 
