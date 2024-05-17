@@ -49,6 +49,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
         
         
         Folder(topSizeModifier: 0)
+            
             .fill(isClicked ? color : shadow)
             .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
             .padding([.top], isClicked ? 0 : 16)
