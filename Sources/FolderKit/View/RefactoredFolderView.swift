@@ -51,9 +51,10 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
         Folder(topSizeModifier: 0)
             .fill(isClicked ? color : shadow)
             .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-            .padding([.top, .leading], isClicked ? 0 : 16)
+            .padding([.top], isClicked ? 0 : 16)
+            .padding([.leading], isClicked ? 0 : 8)
 
-            .ignoresSafeArea()
+//            .ignoresSafeArea()
             .overlay {
                 ZStack {
                     
@@ -115,7 +116,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                 
             }
             .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
-            .ignoresSafeArea()
+//            .ignoresSafeArea()
         
         
             .onChange(of: isClicked) { oldValue, newValue in

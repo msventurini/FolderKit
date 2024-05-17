@@ -15,16 +15,26 @@ struct NewFolderShape: Shape {
     var rightPadding: CGFloat = 0
     var leftPadding: CGFloat = 0
     
+    func smallerArcRadius(for width: CGFloat) -> CGFloat {
+        let radius: CGFloat = (0.0523 * width) + 2.3
+        return radius
+    }
+    
+    func biggerArcRadius(for width: CGFloat) -> CGFloat {
+        let radius: CGFloat = (0.105 * width) - 3.4
+        return radius
+    }
+    
     func path(in rect: CGRect) -> Path {
         
         let referenceWidth: CGFloat = 109
         
         let currentSize: CGFloat = (rect.width)
         
-        let cornerRadius: CGFloat = 8 * (currentSize/referenceWidth)
-        
+
         let tabContentWidth: CGFloat = 22 * (currentSize/referenceWidth)
         
+        // atualizado
         
         let minX = rect.minX + rightPadding
         let maxX = rect.maxX - leftPadding
@@ -32,26 +42,31 @@ struct NewFolderShape: Shape {
         let minY = rect.minY + topPadding
         let maxY = rect.maxY - bottomPadding
         
+        let width = maxX - minX
+        
+        let biggerArcRadius: CGFloat = biggerArcRadius(for: width)
+        let smallerArcRadius: CGFloat = smallerArcRadius(for: width)
+        
         
         
         let begin = CGPoint(
             x: minX,
-            y: rect.maxY - cornerRadius
+            y: rect.maxY - biggerArcRadius
         )
         
         let topLeftArcCenter = CGPoint(
-            x: minX + cornerRadius,
-            y: minY + cornerRadius * 3
+            x: minX + biggerArcRadius,
+            y: minY + biggerArcRadius * 3
         )
         
         let tabBottomArcCenter = CGPoint(
-            x: maxX - (cornerRadius * 3) - tabContentWidth,
-            y: minY + cornerRadius
+            x: maxX - (biggerArcRadius * 3) - tabContentWidth,
+            y: minY + biggerArcRadius
         )
         
         let tabTopArcCenter = CGPoint(
-            x: maxX - (cornerRadius*0.75) - tabContentWidth,
-            y: minY + cornerRadius
+            x: maxX - (biggerArcRadius*0.75) - tabContentWidth,
+            y: minY + biggerArcRadius
         )
         
         
@@ -62,7 +77,7 @@ struct NewFolderShape: Shape {
         
         path.addArc(
             center: topLeftArcCenter,
-            radius: cornerRadius,
+            radius: biggerArcRadius,
             startAngle: Angle(degrees: 180),
             endAngle: Angle(degrees: 270),
             clockwise: false
@@ -70,7 +85,7 @@ struct NewFolderShape: Shape {
         
         path.addArc(
             center: tabBottomArcCenter,
-            radius: cornerRadius,
+            radius: biggerArcRadius,
             startAngle: Angle(degrees: 90),
             endAngle: Angle(degrees: 25),
             clockwise: true
@@ -78,7 +93,7 @@ struct NewFolderShape: Shape {
         
         path.addArc(
             center: tabTopArcCenter,
-            radius: cornerRadius,
+            radius: biggerArcRadius,
             startAngle: Angle(degrees: -150),
             endAngle: Angle(degrees: 270),
             clockwise: false
@@ -86,9 +101,9 @@ struct NewFolderShape: Shape {
         
         path.addArc(
             center: CGPoint(
-                x: maxX - cornerRadius,
-                y: minY + cornerRadius),
-            radius: cornerRadius,
+                x: maxX - biggerArcRadius,
+                y: minY + biggerArcRadius),
+            radius: biggerArcRadius,
             startAngle: Angle(degrees: 270),
             endAngle: Angle(degrees: 0),
             clockwise: false
@@ -96,9 +111,9 @@ struct NewFolderShape: Shape {
         
         path.addArc(
             center: CGPoint(
-                x: maxX - cornerRadius,
-                y: maxY - cornerRadius),
-            radius: cornerRadius,
+                x: maxX - biggerArcRadius,
+                y: maxY - biggerArcRadius),
+            radius: biggerArcRadius,
             startAngle: Angle(degrees: 0),
             endAngle: Angle(degrees: 90),
             clockwise: false
@@ -106,15 +121,15 @@ struct NewFolderShape: Shape {
         
         path.addArc(
             center: CGPoint(
-                x: minX + cornerRadius,
-                y: maxY - cornerRadius),
-            radius: cornerRadius,
+                x: minX + biggerArcRadius,
+                y: maxY - biggerArcRadius),
+            radius: biggerArcRadius,
             startAngle: Angle(degrees: 90),
             endAngle: Angle(degrees: 180),
             clockwise: false
         )
         
-        path.closeSubpath()
+        
         
         
         return path
@@ -187,22 +202,23 @@ struct testeNewShape: View {
             
             NewFolderShape()
                 .fill(.blue)
-            Folder(topSizeModifier: 0, insetAmount: 0)
-                .fill(.pink)
-                .opacity(0.2)
-            //            VStack {
-            //                Image(.newFolderIconRef)
-            //                    .resizable()
-            //                    .scaledToFit()
-            //                    .opacity(0.2)
-            //                Spacer()
-            //            }
+//            Folder(topSizeModifier: 0, insetAmount: 0)
+//                .fill(.pink)
+//                .opacity(0.2)
+                        VStack {
+                            Image(.newFolderIconRef)
+                                .resizable()
+                                .scaledToFit()
+                                .opacity(0.2)
+                            Spacer()
+                        }
             
             
             
             
             
         }
+        .ignoresSafeArea()
         
     }
 }
