@@ -30,7 +30,7 @@ public struct Folder: InsettableShape {
 //        let referenceSize: CGFloat = (rect.height < rect.width ? 262 : 350)
         let referenceSize: CGFloat = 350
 //        let currentSize: CGFloat = (rect.height < rect.width ? rect.height : rect.width)
-        let currentSize: CGFloat = (rect.width)
+        let currentSize: CGFloat = (rect.width) - insetAmount
 //        let referenceSize: CGFloat = (rect.height)
         
 //        let cornerRadius: CGFloat = 24
@@ -40,27 +40,54 @@ public struct Folder: InsettableShape {
         
         let textWidth: CGFloat = 82
         
-        let begin = CGPoint(x: rect.minX, y: rect.maxY - cornerRadius)
-
-//        let begin = CGPoint(x: cornerWidth, y: rect.minY + 80)
+        var minX = rect.minX + insetAmount
+        var minY = rect.minY + insetAmount
+        var maxX = rect.maxX - insetAmount
+        var maxY = rect.maxY - insetAmount
         
+        let begin = CGPoint(x: minX, y: maxY - cornerRadius)
         
         var path = Path()
         path.move(to: begin)
         
         
-        path.addArc(center: CGPoint(x: rect.minX + cornerRadius, y: rect.minY + cornerRadius * 3), radius: cornerRadius, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
+        path.addArc(
+            center: CGPoint(
+                x: minX + cornerRadius,
+                y: minY + cornerRadius * 3),
+            radius: cornerRadius, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
         
-        path.addArc(center: CGPoint(x: rect.maxX - cornerRadius*3 - textWidth, y: rect.minY + tabCornerRadius + cornerRadius/2), radius: tabCornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 45), clockwise: true)
+        path.addArc(
+            center: CGPoint(
+                x: maxX - cornerRadius*3 - textWidth,
+                y: minY + tabCornerRadius + cornerRadius/2),
+            radius: tabCornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 45), clockwise: true)
         
-        path.addArc(center: CGPoint(x: rect.maxX - cornerRadius - textWidth, y: rect.minY + tabCornerRadius), radius: tabCornerRadius, startAngle: Angle(degrees: 225), endAngle: Angle(degrees: 270), clockwise: false)
+        path.addArc(
+            center: CGPoint(
+                x: maxX - cornerRadius - textWidth,
+                y: minY + tabCornerRadius),
+            radius: tabCornerRadius, startAngle: Angle(degrees: 225), endAngle: Angle(degrees: 270), clockwise: false)
 
-        path.addArc(center: CGPoint(x: rect.maxX - cornerRadius, y: rect.minY + cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 0), clockwise: false)
+        path.addArc(
+            center: CGPoint(
+                x: maxX - cornerRadius,
+                y: minY + cornerRadius),
+            radius: cornerRadius, startAngle: Angle(degrees: 270), endAngle: Angle(degrees: 0), clockwise: false)
         
-        path.addArc(center: CGPoint(x: rect.maxX - cornerRadius, y: rect.maxY - cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 0), endAngle: Angle(degrees: 90), clockwise: false)
+        path.addArc(
+            center: CGPoint(
+                x: maxX - cornerRadius,
+                y: maxY - cornerRadius),
+            radius: cornerRadius, startAngle: Angle(degrees: 0), endAngle: Angle(degrees: 90), clockwise: false)
         
-        path.addArc(center: CGPoint(x: rect.minX + cornerRadius, y: rect.maxY - cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 180), clockwise: false)
+        path.addArc(
+            center: CGPoint(
+                x: minX + cornerRadius,
+                y: maxY - cornerRadius),
+            radius: cornerRadius, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 180), clockwise: false)
         
+        path.closeSubpath()
 //        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 80))
         
         return path
@@ -97,7 +124,7 @@ public struct Folder3DPath: InsettableShape {
 //        let referenceSize: CGFloat = (rect.height < rect.width ? 262 : 350)
         let referenceSize: CGFloat = 350
 //        let currentSize: CGFloat = (rect.height < rect.width ? rect.height : rect.width)
-        let currentSize: CGFloat = (rect.width)
+        let currentSize: CGFloat = (rect.width) - insetAmount
 //        let referenceSize: CGFloat = (rect.height)
         
 //        let cornerRadius: CGFloat = 24
@@ -170,9 +197,10 @@ struct FolderShapePreview: View {
         
         
             
-            Folder(topSizeModifier: topSizeModifier)
 //                .frame(maxWidth: isTapped ? .infinity : 350, maxHeight: isTapped ? .infinity : 262)
-            .stroke()
+//            .stroke()
+        Folder(topSizeModifier: topSizeModifier)
+            .strokeBorder(style: .init(lineWidth: 2))
                 .frame(maxWidth: isTapped ? .infinity : 150, maxHeight: isTapped ? .infinity : 100)
                 .onTapGesture {
                     withAnimation(.bouncy) {
