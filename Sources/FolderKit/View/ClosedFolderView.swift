@@ -32,13 +32,13 @@ public struct ClosedFolderView: View{
         
         Folder(topSizeModifier: 0)
             .fill(shadow)
-            .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+            .strokeBorder(style: .init(lineWidth: 2), antialiased: true)
             .padding([.top,.leading], 8)
             .overlay {
                 
                 Folder(topSizeModifier: 0)
                     .fill(color)
-                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                    .strokeBorder(style: .init(lineWidth: 2), antialiased: true)
                     .padding([.trailing, .bottom], (8))
                     .frame(maxHeight: (.infinity))
                 
