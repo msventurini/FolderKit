@@ -49,13 +49,13 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
         
         
         Folder(topSizeModifier: 0)
-            
+        
             .fill(isClicked ? color : shadow)
             .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-            .padding([.top], isClicked ? 0 : 16)
-            .padding([.leading], isClicked ? 0 : 8)
-
-//            .ignoresSafeArea()
+            .padding([.top,.leading], isClicked ? 0 : 8)
+        
+        
+        //            .ignoresSafeArea()
             .overlay {
                 ZStack {
                     
@@ -83,7 +83,7 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                     }
                     .groupBoxStyle(TesteGroupBox(folderIsOpen: $isClicked))
                     .padding(.top, isClicked ? 76 : 0)
-//                    .padding()
+                    //                    .padding()
                     
                     
                     .ignoresSafeArea()
@@ -95,29 +95,27 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                         .frame(minWidth: 350, idealWidth: 350, maxWidth: .infinity)
                 }
                 
-                VStack {
-                    Spacer()
-                    
-                    Folder(topSizeModifier: 0)
-                        .fill(color ?? .cyan)
-                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                        .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                        .frame(maxHeight: (isClicked ? 0 : .infinity))
-                    
-                        .visualEffect { content, geometryProxy in
-                            content
-                                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
-                            
-                        }
-                    
-                }
+                
+                Folder(topSizeModifier: 0)
+                    .fill(color ?? .cyan)
+                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                    .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+                    .frame(maxHeight: (isClicked ? 0 : .infinity))
+                
+                    .visualEffect { content, geometryProxy in
+                        content
+                            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+                        
+                    }
+                
+                
                 
                 
                 
                 
             }
             .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
-//            .ignoresSafeArea()
+        //            .ignoresSafeArea()
         
         
             .onChange(of: isClicked) { oldValue, newValue in
@@ -191,7 +189,6 @@ struct testeFolder2: View {
             RefactoredFolderView(text: "a", color: .cyan, shadow: .blue,  propertiesTextOpacity: 1.0, isClicked: $haveFolderIsClicked, animationOnProgress: $haveFolderIsOpening) {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 22) {
-                        //                        Text("body")
                         Rectangle()
                             .frame(width: 156,height: 212)
                         Rectangle()
@@ -206,27 +203,19 @@ struct testeFolder2: View {
                             .frame(width: 156,height: 212)
                         Rectangle()
                             .frame(width: 156,height: 212)
-                        
                     }
                 }
-                
-                
             } header: {
                 Text("header")
             }
-            
             .onTapGesture {
                 withAnimation(.interpolatingSpring(stiffness: 300, damping: 100).speed(0.7)) {
                     haveFolderIsClicked.toggle()
-                    
                 }
-                
             }
         }
         .frame(maxWidth: haveFolderIsClicked ? .infinity : 350, maxHeight: haveFolderIsClicked ? .infinity : 270)
-        
-        //        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262, maxHeight: .infinity, alignment: .center)
-        
+
     }
 }
 
