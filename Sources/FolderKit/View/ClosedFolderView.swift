@@ -33,21 +33,18 @@ public struct ClosedFolderView: View{
         Folder(topSizeModifier: 0)
             .fill(shadow)
             .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-            .padding([.top], 16)
-            .padding([.leading], 8)
+            .padding([.top,.leading], 8)
             .overlay {
-                VStack {
-                    Spacer()
-                    
-                    Folder(topSizeModifier: 0)
-                        .fill(color)
-                        .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                        .padding([.trailing, .bottom], (8))
-                        .frame(maxHeight: (.infinity))
-                }
+                
+                Folder(topSizeModifier: 0)
+                    .fill(color)
+                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                    .padding([.trailing, .bottom], (8))
+                    .frame(maxHeight: (.infinity))
+                
             }
             .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
-
+        
     }
     
     
@@ -57,4 +54,6 @@ public struct ClosedFolderView: View{
 
 #Preview {
     ClosedFolderView(color: .cyan, shadow: .blue)
+        .frame(width: 300, height: 400)
+        .background(.yellow)
 }
