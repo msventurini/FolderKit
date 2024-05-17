@@ -55,18 +55,20 @@ public struct FolderView<Content: View>: View{
                 }
             
             
-            ZStack {
-                Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
-                    .fill(color)
-                    .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
-                    .padding([.trailing, .bottom], (isClicked ? 0 : 8))
-                    .padding([.top, .leading], (isClicked ? 8 : 0))
-
-            }
+            
+            Folder(topSizeModifier: getTopFolderSpacer(fontSize: sizeCategory))
+                .fill(color)
+                .strokeBorder(style: .init(lineWidth: 2), antialiased: false)
+                .padding([.trailing, .bottom], (isClicked ? 0 : 8))
+                .padding([.top, .leading], (isClicked ? 8 : 0))
+                .frame(maxHeight: (isClicked ? 262 : .infinity))
+                .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, anchorZ: 0, perspective: 0.5)
             
             
-            .frame(maxHeight: (isClicked ? 0 : .infinity))
-            .rotation3DEffect(Angle(degrees: (isClicked ? -90 : 0)), axis: (x: 1.0, y: 0.0, z: 0.0), anchor: .bottom, perspective: 1)
+            
+            
+            
+            
             
         }
         .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
