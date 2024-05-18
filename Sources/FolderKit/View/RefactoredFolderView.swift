@@ -89,6 +89,8 @@ public struct RefactoredFolderView<Content: View, Header: View>: View{
                     .layoutPriority(isClicked ? 0 : 1)
             }
         }
+        .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
+
         .ignoresSafeArea()
     }
     
