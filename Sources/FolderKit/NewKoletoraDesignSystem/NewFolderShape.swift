@@ -77,7 +77,7 @@ public struct NewFolderShape: InsettableShape {
         
         let begin = CGPoint(
             x: minX,
-            y: rect.maxY - biggerArcRadius
+            y: rect.maxY + (-biggerArcRadius * 1 - expansionproportion) + 80 * expansionproportion
         )
         
         let topLeftArcCenter = CGPoint(
@@ -87,7 +87,7 @@ public struct NewFolderShape: InsettableShape {
         
         let tabBottomArcCenter = CGPoint(
             x: maxX - (biggerArcRadius * 3) - tabContentWidth,
-            y: minY + biggerArcRadius
+            y: (minY + biggerArcRadius) * (1 - expansionproportion) + (smallerArcRadius + biggerArcRadius * 0.5) * expansionproportion
         )
         
         let tabTopArcCenter = CGPoint(
@@ -111,8 +111,7 @@ public struct NewFolderShape: InsettableShape {
         
         path.addArc(
             center: tabBottomArcCenter,
-            radius: biggerArcRadius,
-            startAngle: Angle(degrees: 90),
+            radius: (biggerArcRadius * (1 - expansionproportion)) + (smallerArcRadius * expansionproportion),            startAngle: Angle(degrees: 90),
             endAngle: Angle(degrees: 25),
             clockwise: true
         )
@@ -228,22 +227,24 @@ struct testeNewShape2: View {
 
 
 struct testeNewShape: View {
+    
+    @State var expansionProportion: CGFloat = 0
+    
     var body: some View {
         
         ZStack {
             
-            NewFolderShape(expansionproportion: 1)
+            NewFolderShape(expansionproportion: expansionProportion)
                 .fill(.blue)
-//            Folder(topSizeModifier: 0, insetAmount: 0)
-//                .fill(.pink)
-//                .opacity(0.2)
-                        VStack {
-                            Image(.newFolderIconRef)
-                                .resizable()
-                                .scaledToFit()
-                                .opacity(0.2)
-                            Spacer()
+                .onTapGesture {
+                    withAnimation {
+                        if expansionProportion > 0 {
+                            expansionProportion = 0
+                        } else {
+                            expansionProportion = 1
                         }
+                    }
+                }
             
             
             
