@@ -35,7 +35,7 @@ public struct Folder: InsettableShape {
         
 //        let cornerRadius: CGFloat = 24
         let cornerRadius: CGFloat = 24 * (currentSize/referenceSize)
-        let tabHeight: CGFloat = 48
+        
         let tabCornerRadius: CGFloat = 18 * (currentSize/referenceSize)
         
         let textWidth: CGFloat = 82

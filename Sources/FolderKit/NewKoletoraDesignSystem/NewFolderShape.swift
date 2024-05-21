@@ -39,7 +39,7 @@ public struct NewFolderShape: InsettableShape {
         
         let referenceWidth: CGFloat = 109
         
-        let currentSize: CGFloat = (rect.width)
+        let currentSize: CGFloat = (rect.width) - insetAmount
         
 
         let tabContentWidth: CGFloat = 22 * (currentSize/referenceWidth)
