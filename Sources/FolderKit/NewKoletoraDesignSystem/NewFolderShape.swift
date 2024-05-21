@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct NewFolderShape: Shape {
+public struct NewFolderShape: InsettableShape {
     
     
     var topPadding: CGFloat = 0
@@ -15,6 +15,8 @@ public struct NewFolderShape: Shape {
     var rightPadding: CGFloat = 0
     var leftPadding: CGFloat = 0
     
+    var insetAmount: CGFloat = 0
+
     
     public init(topPadding: CGFloat = 0, bottomPadding: CGFloat = 0, rightPadding: CGFloat = 0, leftPadding: CGFloat = 0) {
         self.topPadding = topPadding
@@ -145,7 +147,11 @@ public struct NewFolderShape: Shape {
     }
     
     
-    
+    public func inset(by amount: CGFloat) -> some InsettableShape {
+        var folder = self
+        folder.insetAmount += amount
+        return folder
+    }
     
     
     
