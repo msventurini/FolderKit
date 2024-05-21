@@ -45,7 +45,6 @@ public struct NewFolderShape: InsettableShape {
     
     public func path(in rect: CGRect) -> Path {
         
-        let referenceWidth: CGFloat = 109
         
         let currentSize: CGFloat = (rect.width) - insetAmount
         
