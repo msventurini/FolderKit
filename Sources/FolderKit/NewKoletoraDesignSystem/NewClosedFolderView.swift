@@ -26,16 +26,16 @@ public struct NewClosedFolderView: View{
     @Environment(\.dynamicTypeSize) private var sizeCategory
     
     @Binding var isOnPerspective: Bool
-    @Binding var referenceWidth: CGFloat
+    @Binding var expansionproportion: CGFloat
 
     
-    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, topSizeModifier: Int = 50, isOnPerspective: Binding<Bool>, referenceWidth: Binding<CGFloat>) {
+    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, topSizeModifier: Int = 50, isOnPerspective: Binding<Bool>, expansionproportion: Binding<CGFloat>) {
         self.text = text
         self.color = color
         self.shadow = shadow
         self.propertiesTextOpacity = propertiesTextOpacity
         self._isOnPerspective = isOnPerspective
-        self._referenceWidth = referenceWidth
+        self._expansionproportion = expansionproportion
         
     }
     
@@ -44,13 +44,13 @@ public struct NewClosedFolderView: View{
     public var body: some View {
         
         
-        NewFolderShape()
+        NewFolderShape(expansionproportion: expansionproportion)
             .fill(shadow)
             .strokeBorder(style: .init(lineWidth: isOnPerspective ? 2 : 0), antialiased: true)
             .padding([.top,.leading], (isOnPerspective ? 8 : 0))
             .overlay {
                 
-                NewFolderShape()
+                NewFolderShape(expansionproportion: expansionproportion)
                     .fill(color)
                     .strokeBorder(style: .init(lineWidth: isOnPerspective ? 2 : 0), antialiased: true)
 //                    .padding([.top,.leading], (isOnPerspective ? 0 : 8))
@@ -68,7 +68,7 @@ public struct NewClosedFolderView: View{
 
 
 #Preview {
-    NewClosedFolderView(color: .cyan, shadow: .blue, isOnPerspective: .constant(true), referenceWidth: .constant(350))
+    NewClosedFolderView(color: .cyan, shadow: .blue, isOnPerspective: .constant(true), expansionproportion: .constant(0.75))
         .frame(width: 300, height: 400)
         .background(.yellow)
 }
