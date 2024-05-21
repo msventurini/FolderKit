@@ -44,7 +44,8 @@ public struct NewClosedFolderView: View{
                     .frame(maxHeight: (.infinity))
                 
             }
-            .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
+            .frame(minWidth: 109, idealWidth: 99, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
+//            .frame(minWidth: 150, idealWidth: 350, maxWidth: .infinity, minHeight: 100, idealHeight: 262 , maxHeight: .infinity, alignment: .center)
         
     }
     
