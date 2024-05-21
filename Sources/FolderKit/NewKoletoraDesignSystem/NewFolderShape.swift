@@ -46,11 +46,11 @@ public struct NewFolderShape: InsettableShape {
         
         // atualizado
         
-        let minX = rect.minX + rightPadding
-        let maxX = rect.maxX - leftPadding
+        let minX = (rect.minX + insetAmount) + rightPadding
+        let maxX = (rect.maxX - insetAmount) - leftPadding
         
-        let minY = rect.minY + topPadding
-        let maxY = rect.maxY - bottomPadding
+        let minY = (rect.minY + insetAmount) + topPadding
+        let maxY = (rect.maxY - insetAmount) - bottomPadding
         
         let width = maxX - minX
         
