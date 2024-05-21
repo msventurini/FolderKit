@@ -105,7 +105,7 @@ public struct NewFolderShape: InsettableShape {
             center: tabTopArcCenter,
             radius: biggerArcRadius,
             startAngle: Angle(degrees: -150),
-            endAngle: Angle(degrees: 270),
+            endAngle: Angle(degrees: -450),
             clockwise: false
         )
         
@@ -139,6 +139,7 @@ public struct NewFolderShape: InsettableShape {
             clockwise: false
         )
         
+        path.closeSubpath()
         
         
         
@@ -184,21 +185,22 @@ struct testeNewShape2: View {
         ZStack {
             
             NewFolderShape()
-                .fill(.blue)
+//                .fill(.blue)
+                .stroke()
             
-            NewFolderShape(topPadding: 0, bottomPadding: 0, rightPadding: 0, leftPadding: 0)
-                .fill(.pink)
+//            NewFolderShape(topPadding: 0, bottomPadding: 0, rightPadding: 0, leftPadding: 0)
+//                .fill(.pink)
             
             
-            Image(.newFolderIconRef)
-                .opacity(0.3)
+//            Image(.newFolderIconRef)
+//                .opacity(0.3)
             
             
             
             
             
         }
-        .frame(width: 109, height: 99)
+//        .frame(width: 109, height: 99)
         //        .ignoresSafeArea()
         
     }

@@ -54,7 +54,7 @@ public struct NewClosedFolderView: View{
 
 
 #Preview {
-    ClosedFolderView(color: .cyan, shadow: .blue)
+    NewClosedFolderView(color: .cyan, shadow: .blue)
         .frame(width: 300, height: 400)
         .background(.yellow)
 }
