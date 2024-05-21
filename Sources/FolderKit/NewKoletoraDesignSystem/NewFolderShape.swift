@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewFolderShape: Shape {
+public struct NewFolderShape: Shape {
     
     
     var topPadding: CGFloat = 0
@@ -15,17 +15,25 @@ struct NewFolderShape: Shape {
     var rightPadding: CGFloat = 0
     var leftPadding: CGFloat = 0
     
-    func smallerArcRadius(for width: CGFloat) -> CGFloat {
+    
+    public init(topPadding: CGFloat = 0, bottomPadding: CGFloat = 0, rightPadding: CGFloat = 0, leftPadding: CGFloat = 0) {
+        self.topPadding = topPadding
+        self.bottomPadding = bottomPadding
+        self.rightPadding = rightPadding
+        self.leftPadding = leftPadding
+    }
+    
+    public func smallerArcRadius(for width: CGFloat) -> CGFloat {
         let radius: CGFloat = (0.0523 * width) + 2.3
         return radius
     }
     
-    func biggerArcRadius(for width: CGFloat) -> CGFloat {
+    public func biggerArcRadius(for width: CGFloat) -> CGFloat {
         let radius: CGFloat = (0.105 * width) - 3.4
         return radius
     }
     
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         
         let referenceWidth: CGFloat = 109
         
