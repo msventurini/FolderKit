@@ -68,8 +68,12 @@ public struct NewFolderShape: InsettableShape {
         
         let width = maxX - minX
         
-        let biggerArcRadius: CGFloat = biggerArcRadius(for: width)
-        let smallerArcRadius: CGFloat = smallerArcRadius(for: width)
+        let biggerArcRadius: CGFloat = ((0.105 * width) - 3.4) * (1 - expansionproportion) + (24 * (currentSize/referenceWidth) * expansionproportion)
+        let smallerArcRadius: CGFloat =
+        (
+            ((0.0523 * width) + 2.3) * (1 - expansionproportion)
+        +
+        (18 * (currentSize/referenceWidth)) * expansionproportion)
         
         let begin = CGPoint(
             x: minX,
@@ -228,7 +232,7 @@ struct testeNewShape: View {
         
         ZStack {
             
-            NewFolderShape()
+            NewFolderShape(expansionproportion: 1)
                 .fill(.blue)
 //            Folder(topSizeModifier: 0, insetAmount: 0)
 //                .fill(.pink)
