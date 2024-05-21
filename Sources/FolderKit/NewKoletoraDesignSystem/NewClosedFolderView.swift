@@ -44,13 +44,13 @@ public struct NewClosedFolderView: View{
     public var body: some View {
         
         
-        NewFolderShape(referenceWidth: referenceWidth)
+        NewFolderShape()
             .fill(shadow)
             .strokeBorder(style: .init(lineWidth: isOnPerspective ? 2 : 0), antialiased: true)
             .padding([.top,.leading], (isOnPerspective ? 8 : 0))
             .overlay {
                 
-                NewFolderShape(referenceWidth: referenceWidth)
+                NewFolderShape()
                     .fill(color)
                     .strokeBorder(style: .init(lineWidth: isOnPerspective ? 2 : 0), antialiased: true)
 //                    .padding([.top,.leading], (isOnPerspective ? 0 : 8))

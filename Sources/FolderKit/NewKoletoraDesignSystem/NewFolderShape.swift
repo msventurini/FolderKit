@@ -17,23 +17,28 @@ public struct NewFolderShape: InsettableShape {
     
     var insetAmount: CGFloat = 0
 
-    var referenceWidth: CGFloat = 109 //350
+    var expansionproportion: CGFloat = 1
+    
+//    var referenceWidth: CGFloat = 109 //350
     
     public var animatableData: CGFloat {
-        get { referenceWidth }
-        set { referenceWidth = newValue }
+        get { expansionproportion }
+        set { expansionproportion = newValue }
     }
 
     
-    public init(topPadding: CGFloat = 0, bottomPadding: CGFloat = 0, rightPadding: CGFloat = 0, leftPadding: CGFloat = 0, referenceWidth: CGFloat = 109) {
+    public init(topPadding: CGFloat = 0, bottomPadding: CGFloat = 0, rightPadding: CGFloat = 0, leftPadding: CGFloat = 0, expansionproportion: CGFloat = 1) {
         self.topPadding = topPadding
         self.bottomPadding = bottomPadding
         self.rightPadding = rightPadding
         self.leftPadding = leftPadding
-        self.referenceWidth = referenceWidth
+        self.expansionproportion = expansionproportion
     }
     
     public func smallerArcRadius(for width: CGFloat) -> CGFloat {
+        
+        
+        
         let radius: CGFloat = (0.0523 * width) + 2.3
         return radius
     }
@@ -45,11 +50,13 @@ public struct NewFolderShape: InsettableShape {
     
     public func path(in rect: CGRect) -> Path {
         
+        var referenceWidth: CGFloat = (109 * (1 - expansionproportion) + (350 * expansionproportion)) //350
+
         
         let currentSize: CGFloat = (rect.width) - insetAmount
         
 
-        let tabContentWidth: CGFloat = 22 * (currentSize/referenceWidth)
+        let tabContentWidth: CGFloat = ((22 * (currentSize/referenceWidth)) * (1 - expansionproportion) + 82 * expansionproportion)
         
         // atualizado
         
@@ -63,8 +70,6 @@ public struct NewFolderShape: InsettableShape {
         
         let biggerArcRadius: CGFloat = biggerArcRadius(for: width)
         let smallerArcRadius: CGFloat = smallerArcRadius(for: width)
-        
-        
         
         let begin = CGPoint(
             x: minX,
