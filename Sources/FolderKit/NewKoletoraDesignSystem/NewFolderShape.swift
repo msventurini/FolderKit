@@ -17,12 +17,20 @@ public struct NewFolderShape: InsettableShape {
     
     var insetAmount: CGFloat = 0
 
+    var referenceWidth: CGFloat = 109 //350
     
-    public init(topPadding: CGFloat = 0, bottomPadding: CGFloat = 0, rightPadding: CGFloat = 0, leftPadding: CGFloat = 0) {
+    public var animatableData: CGFloat {
+        get { referenceWidth }
+        set { referenceWidth = newValue }
+    }
+
+    
+    public init(topPadding: CGFloat = 0, bottomPadding: CGFloat = 0, rightPadding: CGFloat = 0, leftPadding: CGFloat = 0, referenceWidth: CGFloat = 109) {
         self.topPadding = topPadding
         self.bottomPadding = bottomPadding
         self.rightPadding = rightPadding
         self.leftPadding = leftPadding
+        self.referenceWidth = referenceWidth
     }
     
     public func smallerArcRadius(for width: CGFloat) -> CGFloat {
