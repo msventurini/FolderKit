@@ -26,14 +26,16 @@ public struct NewClosedFolderView: View{
     @Environment(\.dynamicTypeSize) private var sizeCategory
     
     @Binding var isOnPerspective: Bool
+    @Binding var referenceWidth: CGFloat
 
     
-    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, topSizeModifier: Int = 50, isOnPerspective: Binding<Bool>) {
+    public init(text: String? = nil, color: Color, shadow: Color, propertiesTextOpacity: CGFloat = 0, topSizeModifier: Int = 50, isOnPerspective: Binding<Bool>, referenceWidth: Binding<CGFloat>) {
         self.text = text
         self.color = color
         self.shadow = shadow
         self.propertiesTextOpacity = propertiesTextOpacity
         self._isOnPerspective = isOnPerspective
+        self._referenceWidth = referenceWidth
         
     }
     
@@ -42,13 +44,13 @@ public struct NewClosedFolderView: View{
     public var body: some View {
         
         
-        NewFolderShape()
+        NewFolderShape(referenceWidth: referenceWidth)
             .fill(shadow)
             .strokeBorder(style: .init(lineWidth: isOnPerspective ? 2 : 0), antialiased: true)
             .padding([.top,.leading], (isOnPerspective ? 8 : 0))
             .overlay {
                 
-                NewFolderShape()
+                NewFolderShape(referenceWidth: referenceWidth)
                     .fill(color)
                     .strokeBorder(style: .init(lineWidth: isOnPerspective ? 2 : 0), antialiased: true)
 //                    .padding([.top,.leading], (isOnPerspective ? 0 : 8))
@@ -66,7 +68,7 @@ public struct NewClosedFolderView: View{
 
 
 #Preview {
-    NewClosedFolderView(color: .cyan, shadow: .blue, isOnPerspective: .constant(true))
+    NewClosedFolderView(color: .cyan, shadow: .blue, isOnPerspective: .constant(true), referenceWidth: .constant(350))
         .frame(width: 300, height: 400)
         .background(.yellow)
 }
